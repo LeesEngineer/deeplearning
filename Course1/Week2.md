@@ -1,4 +1,4 @@
-# 前言
+ # 前言
 
 </br>
 
@@ -156,25 +156,109 @@
 
 <p>为了找到优的参数值，会用一些初始值(随意，但一般是 0)来初始化 w 和 b</p>
 
-<p>梯度下降法会以初始点开始，然后朝<b>最陡的</b>下坡方向走一步，这是梯度下降的一次迭代</p>
+<p>梯度下降法会以初始点开始，然后朝<b>最陡的</b>下坡方向走一步，需要迭代这一过程</p>
 
+<p>这里忽略 b，仅用一维曲线代替多维曲线：</p>
 
+![f99644c7-8587-4602-bd96-7fe4fdfbbd5c](https://github.com/user-attachments/assets/b063db5a-4d51-4875-8e7d-9fe8507bf97b)
 
+<p>梯度下降将重复执行以下更新的操作（在算法收敛到 optima 之前会重复这样做）</p>
 
+![QianJianTec1738844070954](https://github.com/user-attachments/assets/d09b5269-7ed5-4161-9278-d5dd03eaefed)
 
+<p>b 同理</p>
 
+<p>alpha 表示学习率，控制在每一次梯度下降法中步长大小</p>
 
+<p>我们希望得到在当前参数条件下，斜率是怎样的，之后我们可以采用下降素的最快的步长</p>
 
+<p>w 和 b 的迭代公式是实际迭代更新参数时进行的操作</p>
 
+</br>
 
+# 计算图
 
+</br>
 
+## first
 
+</br>
 
+<p>神经网络的计算过程：由正向传播进行前向计算来计算神经网络的输出，以及反向传播计算来计算梯度和微分</p>
 
+<p>计算图解释了为什么以这种方式来组织</p>
 
+<p>为演示计算图，来看一个简单的逻辑回归或单层神经网络</p>
 
+```
+J(a, b, c) = 3(a + bc)
 
+u = bc
+v = a + u
+J = 3v
+```
+
+![0fad82ee-e380-488b-8685-5c0e6ce54991](https://github.com/user-attachments/assets/2bbe060d-90ab-4e32-a3fb-a296d857af2b)
+
+<p>a = 5, b = 3, c = 2 --> J = 33（一次正向传播）</p>
+
+<p>在逻辑回归的情况下，J 是我们试图最小化的 cost 函数</p>
+
+</br>
+
+## second（反向传播）
+
+</br>
+
+<p>用例子说明如何使用计算图来计算函数 J 的导数</p>
+
+![QianJianTec1738849277525](https://github.com/user-attachments/assets/75ae77c3-5338-4b70-8d5d-1f308b5ef32c)
+
+<p>计算最终输出变量（而这通常是你最关心的变量）对于 v 的导数，就是一次反向传播</p>
+
+<p>用链式法则算其他</p>
+
+![QianJianTec1738851283597](https://github.com/user-attachments/assets/3803da5c-41c3-402c-b02c-62ae8460a0f4)
+
+<p>引入新记号 dvar：finaloutputvar 对其他变量的导</p>
+
+</br>
+
+# 梯度下降逻辑回归
+
+</br>
+
+<p>将讨论在实现逻辑回归时，如何计算导数来实现梯度下降，重点在于梯度下降的关键方程（我承认使用计算图对于逻辑回归的梯度下降有些大材小用）</p>
+
+<p>之前建立了如下的逻辑回归方程：</p>
+
+![05e923f8-c674-466b-a7b3-ca766bf19799](https://github.com/user-attachments/assets/eb51ebd4-ac1b-4ea3-aa3b-95feb27c7d6e)
+
+<p>换个例子，假如有两个特征 x1，x2：</p>
+
+![8bdabee2-dd19-4bde-b882-fc15b6ec08e8](https://github.com/user-attachments/assets/a4c23578-dc3b-41a8-8fad-4e7895878d4d)
+
+<p>在逻辑回归中，要做的就是修改参数 w 和 b，来减少损失函数。之前讲前向传播的例子中，讲了如何计算单个样本的损失函数，现在看看如何反向计算导数：</p>
+
+<p>首先计算损失函数对于 a 的导数</p>
+
+![QianJianTec1738852640297](https://github.com/user-attachments/assets/84275b77-c3f3-4402-b37b-88c9a3e7bee3)
+
+<p>算 dz：</p>
+
+![QianJianTec1738852865655](https://github.com/user-attachments/assets/c7df7260-b3af-42cd-acb8-d91423704a5d)
+
+<p>注：sigmoid 函数的导数等于 a(1 - a)</p>
+
+<p>最后一步是反向算出你需要改变 w 和 b 多少</p>
+
+![QianJianTec1738853160432](https://github.com/user-attachments/assets/95cf62f9-b8b4-4702-ac92-4613e4923a8f)
+
+![QianJianTec1738853194658](https://github.com/user-attachments/assets/91f69274-c92e-4362-ab68-554a269838fd)
+
+<p>所以如果要对一个例子进行梯度下降，就要算出 dz，再算出 dw 和 db，然后进行更新</p>
+
+<p>以上是对于一个单一的训练样本如何计算导数和执行逻辑回归的梯度下降</p>
 
 
 
