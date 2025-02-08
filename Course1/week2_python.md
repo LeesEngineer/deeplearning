@@ -81,9 +81,21 @@ dw /= m
 
 ![QianJianTec1739024678938](https://github.com/user-attachments/assets/69e1a587-fa0e-4dc3-83f8-c73ad320d776)
 
+<p>然后预测第二个，第三个，第 m 个，都需要做这个计算。不过为了实现前向传播，即计算出 m 个训练样本的预测结果，有不用 for-loop 的实现方法</p>
 
+<p>首先回忆一下，曾把矩阵 X 定义为训练的输入值</p>
 
+![QianJianTec1739025101548](https://github.com/user-attachments/assets/815e02ae-3024-468a-a549-08ead674243c)
 
+<p>计算 z1, z2, z3，只需要用一行代码：首先构造一个 1 * m 维的行向量，方便计算 z1, z2, zm，实际上可以表达成</p>
+
+![QianJianTec1739025403330](https://github.com/user-attachments/assets/43aaa3e2-c5b6-404f-aa06-dc8822036045)
+
+`Z = np.dot(w.T, X) + b`
+
+<p>关于求 a：就像把所有 z 排列在一起可以得到 Z，排列所有 a，得到 A， 在作业中，将看到如何实现一个输入输出为向量值的 sigmoid 函数，所以将 Z 作为 sigmoid 的输入值，会非常高效的得到 A</p>
+
+<p>下一步，证明还可以用向量化来高效计算反向传播计算导数</p>
 
 
 
