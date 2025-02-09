@@ -97,6 +97,69 @@ dw /= m
 
 <p>下一步，证明还可以用向量化来高效计算反向传播计算导数</p>
 
+</br>
+
+# Vectorizing Logistic Regression's Gradient Computation
+
+</br>
+
+<p>你已经看到了如何通过向量化计算预测，同时计算出整个训练集的激活值 a，现在讨论如何用向量化计算全部 m 个训练样本的梯度（同时计算）</p>
+
+<p>在讲梯度下降时，dz_1 = a_1 - y_1，以此类推。所以我们可以定义一个新矩阵（m 维行向量）：</p>
+
+`dZ = [dz_1, dz_2, ... , dz_m]`
+
+<p>同理定义 A，Y，基于这样的定义，得到 dZ = A - Y，仅需一行代码，可以完成所有计算</p>
+
+<p>在之前的实现中，已经去掉了一个 for-loop，但仍有一个遍历训练集的循环：</p>
+
+<p>通过如下的操作把他们向量化，对于计算 db 的向量化实现，只需要对所有 dz 求和再除以 m。</p>
+
+`db = np.sum(dZ) / m`
+
+`dw = (X * dz^T) / m`
+
+<p>sum up:</p>
+
+```
+Z = np.dot(w.T, X) + b
+A = sigmoid(Z)
+dz = A - Y
+dw = (X * dZ.T) / m
+db = np.sum(dZ) / m
+w := w - alpha * dw
+b := b - alpha * db
+//完成了前向传播和反向传播
+```
+
+<p>实现了逻辑回归梯度下降的一次迭代。虽然说过要尽量避免 for-loop，但要实现梯度下降的多次迭代，那么仍然需要使用 for-loop，去迭代指定的次数</p>
+
+</br>
+
+# 关于 Python/Numpy 向量说明
+
+</br>
+
+```
+import numpy as np
+a = np.random.randn(5)
+print(a.shape) --> (5,)
+```
+
+<p>a 的形状是这种(5, )的结构，这在 python 中叫做秩为 1 的数组，它既不是行向量，也不是列向量，这会导致一些不直观的影响</p>
+
+```
+print(a.T) //结果与 print(a) 一样，所以 a 和 a 的转置看起来一样
+
+print(np.dot(a, a.T)) //你也许认为 a 乘以 a 转置，或者说 a 的外积，是一个矩阵，但得到的却是一个数字
+```
+
+<p>所以在编写神经网络时，不要使用这种数据结构，即形如(n,)这样秩为 1 的数组，应如此：</p>
+
+`a = np.random.randn(5, 1)` 
+`a = a.reshape((5, 1))`
+
+
 
 
 
