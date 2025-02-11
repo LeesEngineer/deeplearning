@@ -488,10 +488,124 @@ def model(X_train, Y_train, X_test, Y_test, num_iterations = 2000, learning_rate
 
 `d = model(train_set_x, train_set_y, test_set_x, test_set_y, num_iterations = 2000, learning_rate = 0.005, print_cost = True)`
 
+```
+Cost after iteration 0: 0.693147
+Cost after iteration 100: 0.584508
+Cost after iteration 200: 0.466949
+Cost after iteration 300: 0.376007
+Cost after iteration 400: 0.331463
+Cost after iteration 500: 0.303273
+Cost after iteration 600: 0.279880
+Cost after iteration 700: 0.260042
+Cost after iteration 800: 0.242941
+Cost after iteration 900: 0.228004
+Cost after iteration 1000: 0.214820
+Cost after iteration 1100: 0.203078
+Cost after iteration 1200: 0.192544
+Cost after iteration 1300: 0.183033
+Cost after iteration 1400: 0.174399
+Cost after iteration 1500: 0.166521
+Cost after iteration 1600: 0.159305
+Cost after iteration 1700: 0.152667
+Cost after iteration 1800: 0.146542
+Cost after iteration 1900: 0.140872
+train accuracy: 99.04306220095694 %
+test accuracy: 70.0 %
+```
 
+<p>训练准确率接近 100%。这是一次很好的健全性检查：模型正在运行，并且具有足够高的容量来适应训练数据。测试错误率为 68%。考虑到我们使用的数据集很小，并且逻辑回归是线性分类器，对于这个简单的模型来说，这实际上还不错。</p>
 
+![eba5ec59-b387-4741-8569-a3a0a72f4aea](https://github.com/user-attachments/assets/2a638c18-47ac-47e2-b939-a41b4a41251b)
 
+<p>可以看到成本在下降。这表明参数正在被学习。但是，您会发现您可以在训练集上对模型进行更多训练。尝试增加上面单元格中的迭代次数并重新运行单元格。您可能会看到训练集准确率上升，但测试集准确率下降。这称为过度拟合。</p>
 
+</br>
+
+# Further analysis
+
+</br>
+
+<p>进一步分析图像分类模型，研究学习率的可能选择</p>
+
+<p>调整学习率可以对算法产生很大影响</p>
+
+<p>为了使梯度下降法发挥作用，必须明智地选择学习率，alpha 决定了我们更新参数的速度，如果学习率太大，我们可能会“超过”最佳值。同样，如果学习率太小，我们将需要太多迭代才能收敛到最佳值。这就是为什么使用经过良好调整的学习率至关重要。</p>
+
+<p>将模型的学习曲线与几种学习率进行比较。运行下面的单元格。这大约需要 1 分钟。也可以尝试除我们初始化变量learning_rates以包含的三个值以外的其他值，看看会发生什么。</p>
+
+```
+learning_rates = [0.01, 0.001, 0.0001]
+models = {}
+for i in learning_rates:
+    print ("learning rate is: " + str(i))
+    models[str(i)] = model(train_set_x, train_set_y, test_set_x, test_set_y, num_iterations = 1500, learning_rate = i, print_cost = False)
+    print ('\n' + "-------------------------------------------------------" + '\n')
+
+for i in learning_rates:
+    plt.plot(np.squeeze(models[str(i)]["costs"]), label= str(models[str(i)]["learning_rate"]))
+
+plt.ylabel('cost')
+plt.xlabel('iterations')
+
+legend = plt.legend(loc='upper center', shadow=True)
+frame = legend.get_frame()
+frame.set_facecolor('0.90')
+plt.show()
+```
+
+```
+学习率为：0.01
+训练准确率：99.52153110047847 %
+测试准确率：68.0 % 
+-------------------------------------------------------
+学习率为：0.001
+训练准确率：88.99521531100478 %
+测试准确率：64.0 % 
+-------------------------------------------------------
+学习率为：0.0001
+训练准确率：68.42105263157895 %
+测试准确率：36.0 % 
+-------------------------------------------------------
+```
+
+![e0b8c919-c5ab-4ac9-a769-6251c76da8b4](https://github.com/user-attachments/assets/f97ddaa0-abeb-4b35-a0c6-2385a859c0bc)
+
+- 不同的学习率会产生不同的成本，从而产生不同的预测结果。
+
+- 如果学习率过大（0.01），成本可能会上下波动。它甚至可能会发散（尽管在这个例子中，使用 0.01 最终仍会得到一个良好的成本值）。
+
+- 成本较低并不意味着模型更好。您必须检查是否存在过度拟合。当训练准确率远高于测试准确率时，就会发生这种情况。
+
+- 在深度学习中，我们通常建议
+  - 选择能够更好地最小化成本函数的学习率。
+  - 如果模型过度拟合，使用其他技术来减少过度拟合。
+ 
+</br>
+
+# Test with my own image
+
+```
+# 导入必要的库
+from PIL import Image
+import numpy as np
+import matplotlib.pyplot as plt
+
+# 预处理图像以适配算法
+fname = "images/" + my_image
+image = Image.open(fname)  # 使用 Pillow 打开图像
+image = image.resize((num_px, num_px))  # 调整图像大小
+image = np.array(image)  # 将图像转换为 numpy 数组
+
+# 转换形状为模型所需格式
+my_image = image.reshape((1, num_px * num_px * 3)).T
+
+# 使用模型进行预测
+my_predicted_image = predict(d["w"], d["b"], my_image)
+
+# 显示原图像并输出预测结果
+plt.imshow(image)
+print("y = " + str(np.squeeze(my_predicted_image)) + ", your algorithm predicts a \"" + classes[int(np.squeeze(my_predicted_image)),].decode("utf-8") +  "\" picture.")
+```
 
 
 
