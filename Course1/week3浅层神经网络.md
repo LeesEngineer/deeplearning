@@ -164,6 +164,66 @@
 
 <p>接下来会看到，作用于多样本时，通过把训练样本堆叠在矩阵的不同列中，只需要通过很小的改变，就能将逻辑回归总的向量化实现照搬过来</p>
 
+</br>
+
+# Vectorizing across multiple 
+
+</br>
+
+<p>讨论如何对多个训练实例矢量化。结果会和逻辑回归的结果很相似，通过把不同的训练实例按列堆叠在一个矩阵中，就可以拿之前的等式。做一些很小的改动，使得神经网络同时计算所有训练实例的预测</p>
+
+![15fdc900-7b6b-44d2-82ca-4da904632c0d](https://github.com/user-attachments/assets/61cac5dd-c9e1-495a-a6d0-9205eae9a6ec)
+
+<p>这是之前的四个等式，这些等式告诉我们，给定一个特征矢量 x，可以用来取得一个训练实例的 yhat。如果有 m 个训练实例，需要重复这个过程（x^m 用来预测 a[2]^m = yhat^m）</p>
+
+<p>非矢量化实现：</p>
+
+![b47167c1-76b1-430d-92d3-c7acf338922b](https://github.com/user-attachments/assets/4b85b8cf-b2a9-4af3-bfd9-795e13d4c39c)
+
+<p><b>向量化实现：</b></p>
+
+![QianJianTec1739353499704](https://github.com/user-attachments/assets/7e19fb91-8d09-4c64-88fb-64c98a6261c3)
+
+![QianJianTec1739353558058](https://github.com/user-attachments/assets/7d55a15d-03bd-4b25-8634-c9a0a98aaf99)
+
+![QianJianTec1739353634811](https://github.com/user-attachments/assets/913d167d-165d-40d4-99ac-fd17b514bbc6)
+
+![QianJianTec1739353682402](https://github.com/user-attachments/assets/5445e245-82c3-45db-bf1c-40fa7f41cde0)
+
+<p>找相似对比，从 x 出发，把 x 堆叠得到 X。如果对 z 做同样的操作（注意这些也是列向量）得到 Z[1]</p>
+
+![QianJianTec1739354728733](https://github.com/user-attachments/assets/da48c355-f378-46d1-8e33-191ae84fe660)
+
+<p>A[1] 也同理</p>
+
+![QianJianTec1739354825339](https://github.com/user-attachments/assets/ed520c75-3f0c-4522-b677-16e0a95d16a1)
+
+<p>对于 Z[2] 和 A[2] 也是一样的横着堆叠。横向来看 A 代表不同训练实例，纵向来看代表不同的隐藏单元</p>
+
+</br>
+
+# 矢量化实施的解释
+
+</br>
+
+<p>给出说明，确保所写下的公式是对多个样本向量化的正确实现</p>
+
+<p>看一下对于几个样本前向传播计算过程的一部分</p>
+
+![QianJianTec1739360980378](https://github.com/user-attachments/assets/3c0d3a1a-62ec-4f0f-ab84-13a70fb32111)
+
+![QianJianTec1739360953150](https://github.com/user-attachments/assets/6c0e999a-ef01-4141-ab05-e401865aab10)
+
+<p>为了简要说明：将省略 b</p>
+
+<p>考虑 w[1]x(i)</p>
+
+![QianJianTec1739361900625](https://github.com/user-attachments/assets/fdba8258-d43b-496f-bf47-95b641a2b20f)
+
+<p></p>
+
+
+
 
 
 
