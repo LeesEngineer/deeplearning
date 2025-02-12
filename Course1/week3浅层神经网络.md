@@ -220,7 +220,7 @@
 
 ![QianJianTec1739361900625](https://github.com/user-attachments/assets/fdba8258-d43b-496f-bf47-95b641a2b20f)
 
-<p></p>
+<p>现在，如果将训练集记成大写的 X，他是通过将所有的训练样本堆叠在一起得到的</p>
 
 
 
