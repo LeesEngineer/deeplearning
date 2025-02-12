@@ -216,7 +216,7 @@
 
 <p>为了简要说明：将省略 b</p>
 
-<p>考虑 w[1]x(i)</p>
+<p>考虑 w[1]x(i)（对于每一个训练实例都是如此）</p>
 
 ![QianJianTec1739361900625](https://github.com/user-attachments/assets/fdba8258-d43b-496f-bf47-95b641a2b20f)
 
