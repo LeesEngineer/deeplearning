@@ -218,9 +218,11 @@
 
 <p>考虑 w[1]x(i)（对于每一个训练实例都是如此）</p>
 
-![QianJianTec1739361900625](https://github.com/user-attachments/assets/fdba8258-d43b-496f-bf47-95b641a2b20f)
+![QianJianTec1739371569008](https://github.com/user-attachments/assets/5ec74e60-1aa8-456a-8fa9-4928f5445d3e)
 
-<p>现在，如果将训练集记成大写的 X，他是通过将所有的训练样本堆叠在一起得到的</p>
+<p>现在，如果将训练集记成大写的 X，他是通过将所有的训练样本堆叠在一起得到的，X 的构成是在向量 x 之上，依次水平堆叠 x1，x2，x3，...</p>
+
+<p>将 W 与这个矩阵相乘，将会得到水平堆叠的 w[1]x(1)</p>
 
 
 
