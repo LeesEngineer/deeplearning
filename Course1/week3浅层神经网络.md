@@ -357,7 +357,7 @@ Forward
 Z[1] = W[1]X + b[1]
 A[1] = g[1](Z[1])
 Z[2] = W[2]A[1] + b[2]
-A[2] = g[2](Z[2]) = sigmoid(Z[2])
+A[2] = sigmoid(Z[2]) = g[2](Z[2])
 ```
 
 ```
@@ -369,9 +369,12 @@ db[2] = np.sum(dZ[2], axis = 1, keepdims = True) //水平方向求和，keepdims
 
 <p>到此为止所做的和逻辑回归很像，当你继续计算梯度逆传播时，需计算：</p>
 
-```
+![QianJianTec1739627247890](https://github.com/user-attachments/assets/7af16d43-8edc-4a6b-af9b-626d047037d4)
 
-```
+<p>对于输出层，假设你在做二分类问题</p>
+
+
+
 
 
 
