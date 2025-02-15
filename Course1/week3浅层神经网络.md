@@ -308,9 +308,113 @@
 
 <p>当在神经网络中用反向传播算法时，需要计算激活函数的导数，讨论可选择的激活函数，以及该怎样计算这些函数的斜率</p>
 
-<p>首先是 sigmoid 函数</p>
+<p>首先是 sigmoid 函数，没什么好说的</p>
 
 ![QianJianTec1739529533014](https://github.com/user-attachments/assets/46527147-c74e-445d-8396-36bd9deb92ff)
+
+<p>讨论 tanh</p>
+
+![QianJianTec1739587201652](https://github.com/user-attachments/assets/e5e13a2e-263a-4b24-ad3e-22f50ae92b3d)
+
+<p>ReLU 和 leaky-ReLU 没什么好说的</p>
+
+</br>
+
+# 神经网络的梯度下降
+
+</br>
+
+<p>讨论如何为带有单隐藏层的神经网络实现梯度下降，将会使用一些方程去实现反向传播（梯度下降）</p>
+
+<p>对于单隐藏层的神经网络，会有参数 W[1], b[1], W[2], b[2]</p>
+
+<p>如果有 n_x(n[0]) 个输入特征，和 n[1] 个隐藏单元，以及 n[2] 个输出单元（到目前为止 n[2] = 1）：</p>
+
+- W[2] 维度为(n[1], n[0])
+
+- b[1] 维度为(n[1], 1)
+
+- W[2] 维度为(n[2], n[1])
+
+- b[2] 维度为(n[2], 1)
+
+<p>对于神经网络，也有损失函数，假设我们现在在做二元分类：</p>
+
+![QianJianTec1739590530879](https://github.com/user-attachments/assets/a94a36ba-13f6-4264-b733-0ccfe17f90ea)
+
+<p>为了训练算法的参数，需要执行梯度下降。当训练神经网络时，<b>初始化参数随机在全 0 附近十分重要</b></p>
+
+<p>初始化完参数后，梯度下降的每一次循环都要对样本做预测（计算 yhat），之后需要计算导数</p>
+
+![QianJianTec1739591895462](https://github.com/user-attachments/assets/5fdf6c41-7dcd-460e-b5cc-7b03c516ece8)
+
+![QianJianTec1739591922092](https://github.com/user-attachments/assets/a49caa23-6258-44d1-8ff0-4e211ef7559d)
+
+<p>之后进行梯度下降参数的更新(:=)，关键在于如何计算这些导数</p>
+
+```
+Forward
+Z[1] = W[1]X + b[1]
+A[1] = g[1](Z[1])
+Z[2] = W[2]A[1] + b[2]
+A[2] = g[2](Z[2]) = sigmoid(Z[2])
+```
+
+```
+Backward 
+dZ[2] = A[2] - Y
+dW[2] = (dZ[2] A[1]^T) / m
+db[2] = np.sum(dZ[2], axis = 1, keepdims = True) //水平方向求和，keepdims = True 保证db[2] 输出为 (n[2], 1) 维，而不是 (n[2],)
+```
+
+<p>到此为止所做的和逻辑回归很像，当你继续计算梯度逆传播时，需计算：</p>
+
+```
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
