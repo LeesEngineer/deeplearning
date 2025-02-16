@@ -364,12 +364,19 @@ A[2] = sigmoid(Z[2]) = g[2](Z[2])
 Backward 
 dZ[2] = A[2] - Y
 dW[2] = (dZ[2] A[1]^T) / m
-db[2] = np.sum(dZ[2], axis = 1, keepdims = True) //水平方向求和，keepdims = True 保证db[2] 输出为 (n[2], 1) 维，而不是 (n[2],)
+db[2] = np.sum(dZ[2], axis = 1, keepdims = True) //水平方向求和，keepdims = True 保证db[2] 输出为 (n[2], 1) 维，而不是 (n[2],)。也可以选择 reshape
 ```
 
 <p>到此为止所做的和逻辑回归很像，当你继续计算梯度逆传播时，需计算：</p>
 
 ![QianJianTec1739627247890](https://github.com/user-attachments/assets/7af16d43-8edc-4a6b-af9b-626d047037d4)
+
+<p>dZ[1] 为 (n1, m) 的矩阵</p>
+
+```
+dW[1] = (dZ[1] X^T) / m
+db[1] = np.sum(dZ[1], axis = 1, keepdims = True)
+```
 
 <p>对于输出层，假设你在做二分类问题</p>
 
