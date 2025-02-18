@@ -378,7 +378,27 @@ dW[1] = (dZ[1] X^T) / m
 db[1] = np.sum(dZ[1], axis = 1, keepdims = True)
 ```
 
-<p>对于输出层，假设你在做二分类问题</p>
+</br>
+
+# Backpropagation intuition(核心思想)
+
+</br>
+
+<p>前面讨论了反向传播的方程，接下来讨论使用计算图了解方程的得出</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
