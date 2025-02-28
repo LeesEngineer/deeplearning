@@ -225,11 +225,29 @@ dA[l - 1] = W[l]^T · dZ[l]
 
 </br>
 
-<p>当训练神经网络时，能够很好的组织超参数，将有助于更有效地开发网络</p>
+<p>要有效地开发深度神经网络，不仅需要很好的组织你的参数，还有超参数</p>
 
+<p>Hyperparameters：</p>
 
+- learning rate alpha：决定参数如何演变
 
+- iterations
 
+- hiden layer L
+
+- hidden units：n[1], n[2], ...
+
+- Choice of activation functions
+
+<p>超参数以某种方式决定参数 W 和 b 最终的值。后面还有更多的超参数</p>
+
+<p>当你训练深度神经网络时，会发现有很多可能的设置，要做的只是尝试</p>
+
+<p>比如对 alpha</p>
+
+![696c2bc9-0773-4012-90e2-db79a929452b](https://github.com/user-attachments/assets/1def0f3e-0314-4d51-b078-8daedc5c790a)
+
+<p>刚开始一个神经网络时，很难事先知道超参数的最佳值是多少</p>
 
 
 
