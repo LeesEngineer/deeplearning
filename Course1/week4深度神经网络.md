@@ -233,7 +233,7 @@ dA[l - 1] = W[l]^T · dZ[l]
 
 - iterations
 
-- hiden layer L
+- hidden layer L
 
 - hidden units：n[1], n[2], ...
 
@@ -246,6 +246,8 @@ dA[l - 1] = W[l]^T · dZ[l]
 <p>比如对 alpha</p>
 
 ![696c2bc9-0773-4012-90e2-db79a929452b](https://github.com/user-attachments/assets/1def0f3e-0314-4d51-b078-8daedc5c790a)
+
+<p>对于某一个 alpha 使得深网能够快速的学习，并且允许收敛</p>
 
 <p>刚开始一个神经网络时，很难事先知道超参数的最佳值是多少</p>
 
