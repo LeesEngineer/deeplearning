@@ -217,6 +217,8 @@ dA[l - 1] = W[l]^T · dZ[l]
 
 ![46e842a0-15a9-4c84-a03c-1315f7c4ee23](https://github.com/user-attachments/assets/97b8ff4d-9559-430d-b4e4-365d7348da4f)
 
+![0cb465c1-112c-4d0b-99ea-06711215b447](https://github.com/user-attachments/assets/c8d58068-c5ee-4df9-b817-ad650653d385)
+
 <p>你的学习算法的复杂性大多来自于数据而不是你的代码</p>
 
 </br>
