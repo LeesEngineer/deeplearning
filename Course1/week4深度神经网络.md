@@ -205,6 +205,8 @@ db[l] = np.sum(dZ[l], axis = 1, keepdims = true) / m
 dA[l - 1] = W[l]^T · dZ[l]
 ```
 
+![1787cdc0-634a-4914-88a7-7f222482eccd](https://github.com/user-attachments/assets/3460445c-ed96-47f4-a212-4193974ace48)
+
 <p>用这四个方程来实现你的反向函数</p>
 
 `dz[l] = W[l+1]^T dz[l+1] * g[l]'(z[l])`
