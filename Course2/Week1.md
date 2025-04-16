@@ -6,21 +6,53 @@
 
 </br>
 
-#  
+# 偏差与方差 Bias/Variance
 
+</br>
 
+<p>现在的趋势是讨论偏差，讨论方差，但减少讨论偏差方差权衡</p>
 
+<p>给定一个数据集</p>
+ 
+![QQ_1744803359059](https://github.com/user-attachments/assets/d55690bf-bf91-4ad4-80c1-8172c97387c0)
 
+<p>对数据拟合一条直线，得到一个与之相适应的逻辑回归，与数据不太吻合<b>(underfitting)</b>，因此存在高偏差</p>
 
+![QQ_1744803503772](https://github.com/user-attachments/assets/e4b3011c-23cb-431c-a750-387e0fdf6b9f)
 
+<p>如果使用一个及其复杂的分类器(such as deep-neural-network or a new neural network with a lot hidden units)也许可以完美地容纳数据，但也看起来不太合适，因此这是一个具有高方差的分类器，这是对数据的 overfitting</p>
 
+![QQ_1744803705264](https://github.com/user-attachments/assets/81466b5c-fad4-4bb7-b84c-3c7da99e5d93)
 
+<p>使用复杂度中等的分类器，看起来更适合数据</p>
 
+<p>在高维数据中研究别的不同的指标来尝试</p>
 
+<p>通过查看训练集误差和开发集误差，能够对算法做出判断</p>
 
+![QQ_1744804947539](https://github.com/user-attachments/assets/0cc1618c-a109-4fe7-a536-6232e9453bfc)
 
+<p>通过了解 train set error 至少可以了解自己对训练数据的拟合程度，告诉你是否存在 bias</p>
 
+<p>从 train set error 到 dev set error 可以了解方差问题的严重程度</p>
 
+## High bias and high variance
+
+![QQ_1744806167248](https://github.com/user-attachments/assets/96b7e7a3-3027-4858-995d-90fa4840b7f9)
+
+<p>在蓝色线形分类器做一些奇怪的事情，那么它实际上也对部分数据进行了 overfit，紫色既有高偏差又有高方差</p>
+
+<p>这里看起来有点太人为了，但实际上，输入维度高的时候，在某些区域会得到高偏差的东西，而在某些区域会得到高方差的东西。</p>
+
+<p>因此，有可能在不那么人为的高维输入中获得这样的交叉文件</p>
+
+</br>
+
+# Setting up your ML application
+
+</br>
+
+<p></p>
 
 
 
