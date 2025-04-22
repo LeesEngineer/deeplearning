@@ -86,22 +86,47 @@ $$
 
 </br>
 
+<p>之前使用反向传播计算 dw，通过反向传播，能得到 J 关于 w 的偏导数</p>
 
+$$
+dW^{[l]} = (frombackprop)
+$$
 
+$$
+W^{[l]} := W^{[l]} - \alpha dW^{[l]}
+$$
 
+<p>这是为目标函数添加正则化项之前的步骤，现在为目标函数添加了正则化项，就需要为 dw 加上一项</p>
 
+$$
+dW^{[l]} = (frombackprop) + \frac{\lambda}{m} W^{[l]}
+$$
 
+<p>可以证明，新的 dW[l] 仍然正确的定义了添加了额外的正则化项之后代价函数关于参数的导数</p>
 
+<p>出于这个原因，L2 正则化有时也被称为权重衰减(Weight decay)</p>
 
+<p>用新的 dw[l] 进行更新</p>
 
+$$
+W^{[l]} := (1 - \frac{\alpha \lambda}{m} )W^{[l]} - \alpha (frombackprop)
+$$
 
+<p>第一项(系数略小于 1)表示无论矩阵 W[l] 是多少，都会让他变得稍小一些，这就是 L2 范数正则化被称为权重衰减的原因</p>
 
+</br>
 
+# Why regularization reduces overfitting
 
+![QQ_1745323720521](https://github.com/user-attachments/assets/f66e4202-400b-4c5a-a2d2-9b8a01601c03)
 
+<p>可以认为第三个就是过拟合的神经网络</p>
 
+<p></p>
 
-
+$$
+J(W^{[l]}, b^{[l]}) = \frac{1}{m} \sum_{i = 1}^{m} L(\hat{y}^{((i)}, y^{(i)}) 
+$$
 
 
 
