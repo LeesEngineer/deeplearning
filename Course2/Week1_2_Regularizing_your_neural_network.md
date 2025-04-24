@@ -208,32 +208,69 @@ $$
 
 <p>早期没有除以 keep.prob 这一步，所以在测试过程中求平均值变得越来越复杂</p>
 
-<p><b>不同的训练样例的训练，实际上对不同的隐藏单元实施了清零。实际上，如果用同一个训练集进行迭代，在不同的训练轮次中，也应该随机的将不同的隐藏单元清零。</b>因此这并不意味着同一个训练样例的训练应该保证一直丢弃相同的隐藏单元。d3 决定哪些将被清零</p>
+<p><b>不同的训练样例的训练，实际上对不同的隐藏单元实施了清零。实际上，如果用同一个训练集进行迭代，在不同的训练轮次中，也应该随机的将不同的隐藏单元清零。</b>因此这并不意味着同一个训练样例的训练应该保证一直丢弃相同的隐藏单元。d3 决定哪些将被清零(可以用不同的模式清零)</p>
 
+</br>
 
+## Making prediction at test time
 
+</br>
 
+```
+No drop out 
+z[1] = W[1] a[0] + b[1]
+a[1] = g[1](z[1])
+z[2] = W[2] a[1] + b[2]
+a[2] = ...
+```
 
+<p>在测试阶段并没有使用随机失活算法，不用决定哪些隐藏单元要被消除，这是因为在测试阶段做预测的时候，并不想让输出也是随机的。如果在测试阶段也使用随机失活算法，只会为预测增加噪声</p>
 
+<p>可以做的一件事情是，用不同的随机失活的神经网络进行多次预测并取平均值。但是该方法运算效率不高而且会得到几乎相同的预测结果，每次不同的预测过程将给出非常相似的结果</p>
 
+<p>除以 keep.prob 作用是保证如果测试过程没有针对随机失活算法进行缩放(scaling)，那么激活函数的期望输出也不会改变。<b>所以不用在测试阶段过程中加入额外的缩放参数（这与训练过程不同）</b></p>
 
+</br>
 
+# Understanding dropout
 
+</br>
 
+<p>第一个 intuition：dropout 随机关闭神经网络中的神经元。就好像每次迭代都在使用一个较小的神经网络，使用较小的神经网络应该具有正则化效果</p>
 
+<p>第二个 intuition（从单个 unit 的角度来看）：<b>Can't rely on any one feature,so have to spread out weights</b></p>
 
+![QQ_1745477424344](https://github.com/user-attachments/assets/c84f08d0-a597-47e0-bc93-3e7f50244b25)
 
+<p>例如这个单元，有四个输入，需要产生一些有意义的输出。现在，随着 dropout，输入可以被随机消除。现在这个 unit 不能依赖任何 feature，因为任何 feature 都可能随机消失（任何自己的输入都可能随机消失），特别是不愿把所有赌注都放在仅仅这个输入上。因此，这个 unit 将更有动力分散这种方式，让这个单元的四个输入中每一个都有权重。通过分散权重，往往会产生缩小权重平方范数的效果（这与在 L2 正则化中看到的情况类似,dropout 可以正式证明是 L2 正则化的一种自适应形式）</p>
 
+![QQ_1745480449313](https://github.com/user-attachments/assets/c54263cd-e49b-42d3-8311-02de66f91e97)
 
+```
+w[1] is (7, 3)
+w[2] is (7, 7)
+w[3] is (3, 7)
+```
 
+<p><b>逐层调整 keep.prob 也是可行的</b>，W[2] 是最大的权重矩阵，因此为了防止该矩阵的过度拟合，也许对于这个层 keep.prob 可能相对较低，比如 0.5，W[1] 和 W[3] 可能是 0.7。对于后面的层，完全不需要担心过拟合，可以拥有 1 的 keep.prob，为 1 意味着保留了所有单位（没有在那一层中使用 dropout）</p>
 
+<p>对于更担心过度拟合的层，是带有大量参数的层，you could say keep prop to be smaller to apply a more powerful form of dropout。p>
 
+<p>还可以将 dropout 应用于输入层，这样就有机会只执行一个或多个输入特征(feature)，keep.prop 可以很高（0.9），通常不应用 dropout 进入输入层</p>
 
+<p>总结：如果比其他层更担心某些层的拟合性，可以为这些层设置一个更小的 keep.prop。缺点是，为你提供了更多的超参数供你使用交叉验证进行搜索</p>
 
+<p>CV 经常使用 dropout。只有计算机视觉，通常只是没有足够的数据，所以几乎总是过拟合</p>
 
+<p>The thing to remember is that drop-out is a regularization technique,it helps prevent overfitting.And so unless my algorithm is overfitting,I wouldn't actually bother to use drop-out(要记住的一点是，Dropout 是一种正则化技术，它可以帮助防止过拟合。所以，除非我的算法真的出现了过拟合，否则我其实不会特意去用 Dropout。)</p>
 
+</br>
 
+# Other regularization methods
 
+</br>
+
+<p></p>
 
 
 
