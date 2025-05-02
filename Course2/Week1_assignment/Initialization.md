@@ -264,10 +264,212 @@ $$
 
 <p>我保留意见吧</p>
 
+</br>
+
+# Random initialization
+
+</br>
+
+<p>为了打破对称性，我们随机初始化权重。你将看到如果权重被随机初始化，但值非常大，会发生什么情况。</p>
+
+<p>将权重初始化为较大的随机值（按 10 倍缩放），并将偏差初始化为零。用于np.random.randn(..,..) * 10权重，np.zeros((.., ..))用于偏差。</p>
+
+```
+# GRADED FUNCTION: initialize_parameters_random
+
+def initialize_parameters_random(layers_dims):
+    """
+    Arguments:
+    layer_dims -- python array (list) containing the size of each layer.
+    
+    Returns:
+    parameters -- python dictionary containing your parameters "W1", "b1", ..., "WL", "bL":
+                    W1 -- weight matrix of shape (layers_dims[1], layers_dims[0])
+                    b1 -- bias vector of shape (layers_dims[1], 1)
+                    ...
+                    WL -- weight matrix of shape (layers_dims[L], layers_dims[L-1])
+                    bL -- bias vector of shape (layers_dims[L], 1)
+    """
+    
+    np.random.seed(3)               # This seed makes sure your "random" numbers will be the as ours
+    parameters = {}
+    L = len(layers_dims)            # integer representing the number of layers
+    
+    for i in range(1, L):
+        ### START CODE HERE ### (≈ 2 lines of code)
+        parameters['W' + str(i)] = np.random.randn(layers_dims[i], layers_dims[i - 1]) * 10
+        parameters['b' + str(i)] = np.zeros((layers_dims[i], 1))
+        ### END CODE HERE ###
+
+    return parameters
+```
+
+```
+parameters = model(train_X, train_Y, initialization = "random")
+print ("On the train set:")
+predictions_train = predict(train_X, train_Y, parameters)
+print ("On the test set:")
+predictions_test = predict(test_X, test_Y, parameters)
+```
+
+```
+Cost after iteration 0: inf
+Cost after iteration 1000: 0.6240946882166043
+Cost after iteration 2000: 0.5978449711241829
+Cost after iteration 3000: 0.5636338302631672
+Cost after iteration 4000: 0.550097327262185
+Cost after iteration 5000: 0.5443542140109684
+Cost after iteration 6000: 0.5373689058507384
+Cost after iteration 7000: 0.4703439954192491
+Cost after iteration 8000: 0.39768133854217425
+Cost after iteration 9000: 0.39344534852511953
+Cost after iteration 10000: 0.39201679908257836
+Cost after iteration 11000: 0.38915469271083064
+Cost after iteration 12000: 0.38612747395619024
+Cost after iteration 13000: 0.3849707683892173
+Cost after iteration 14000: 0.3827517632656006
+```
+
+![QQ_1746172175080](https://github.com/user-attachments/assets/38ddaae0-5dde-4c6b-a9cd-3217baa773dd)
+
+<p>打破了对称性，给出了更好的结果</p>
+
+![QQ_1746172238232](https://github.com/user-attachments/assets/e253e0c6-000e-4a53-b7e5-dd342468a018)
+
+- 一开始的成本就很高。这是因为，当权重随机值较大时，最后一个激活函数 (Sigmoid) 输出的结果在某些样本中非常接近 0 或 1，而当它判断错误时，就会给该样本带来非常高的损失。事实上，当 log(a[3]) = log(0) 时，损失趋于无穷大
+
+- 初始化不良会导致梯度消失/爆炸，这也会减慢优化算法的速度。
+
+- <b>如果对该网络进行更长时间的训练，您将看到更好的结果，但使用过大的随机数进行初始化会减慢优化速度。</b>
+
+- 将权重初始化为非常大的随机值效果不佳。希望用较小的随机值初始化效果更好。重要的问题是：这些随机值应该多小？来看看 He initialization
+
+</br>
+
+# He initialization
+
+</br>
+
+<p>Xavier 初始化和 He 初始化类似，只不过 Xavier 初始化对权重 W^{[l]} 使用的缩放因子是 \sqrt{1/\text{layers\_dims}[l-1]}，而 He 初始化使用的是 \sqrt{2/\text{layers\_dims}[l-1]}。</p>
+
+$$
+\sqrt{1/\text{layersdims}[l-1]}
+$$
+
+$$
+\sqrt{2/\text{layersdims}[l-1]}
+$$
+
+<p>This function is similar to the previous initialize_parameters_random(...). The only difference is that instead of multiplying np.random.randn(..,..) by 10, you will multiply it by 
+\sqrt{2/\text{layers\_dims}[l-1]}，which is what He initialization recommends for <b>layers with a ReLU activation.</b></p>
+
+```
+# GRADED FUNCTION: initialize_parameters_he
+
+def initialize_parameters_he(layers_dims):
+    """
+    Arguments:
+    layer_dims -- python array (list) containing the size of each layer.
+    
+    Returns:
+    parameters -- python dictionary containing your parameters "W1", "b1", ..., "WL", "bL":
+                    W1 -- weight matrix of shape (layers_dims[1], layers_dims[0])
+                    b1 -- bias vector of shape (layers_dims[1], 1)
+                    ...
+                    WL -- weight matrix of shape (layers_dims[L], layers_dims[L-1])
+                    bL -- bias vector of shape (layers_dims[L], 1)
+    """
+    
+    np.random.seed(3)
+    parameters = {}
+    L = len(layers_dims) - 1 # integer representing the number of layers
+     
+    for i in range(1, L + 1):
+        ### START CODE HERE ### (≈ 2 lines of code)
+        parameters['W' + str(i)] = np.random.randn(layers_dims[i],layers_dims[i - 1]) * np.sqrt(2.0 / layers_dims[i - 1])
+        parameters['b' + str(i)] = np.zeros((layers_dims[i], 1))
+        ### END CODE HERE ###
+        
+    return parameters
+```
+
+```
+parameters = model(train_X, train_Y, initialization = "he")
+print ("On the train set:")
+predictions_train = predict(train_X, train_Y, parameters)
+print ("On the test set:")
+predictions_test = predict(test_X, test_Y, parameters)
+
+Output:
 
 
 
 
+
+
+
+parameters = model(train_X, train_Y, initialization = "he")
+print ("On the train set:")
+predictions_train = predict(train_X, train_Y, parameters)
+print ("On the test set:")
+predictions_test = predict(test_X, test_Y, parameters)
+第 0 次迭代后的成本：0.8830537463419761
+迭代 1000 次后的成本：0.6879825919728063
+迭代 2000 次后的成本：0.6751286264523371
+迭代 3000 次后的成本：0.6526117768893807
+迭代 4000 次后的成本：0.6082958970572938
+迭代 5000 次后的成本：0.5304944491717495
+迭代 6000 次后的成本：0.4138645817071794
+迭代 7000 次后的成本：0.3117803464844441
+迭代 8000 次后的成本：0.2369621533032255
+迭代 9000 次后的成本：0.18597287209206836
+迭代 10000 次后的成本：0.1501555628037181
+迭代 11000 次后的成本：0.12325079292273544
+迭代 12000 次后的成本：0.09917746546525934
+迭代 13000 次后的成本：0.08457055954024277
+迭代 14000 次后的成本：0.07357895962677369
+```
+
+![QQ_1746173149577](https://github.com/user-attachments/assets/831ec029-a95b-4f7f-bdad-e50eb1a6b59c)
+
+![QQ_1746173166890](https://github.com/user-attachments/assets/18234452-b996-4da1-9ecd-5d6445b9b4b7)
+
+<p>The model with He initialization separates the blue and the red dots very well in a small number of iterations.</p>
+
+</br>
+
+# Summary
+
+```
+3-layer NN with zeros initialization:
+    On the train set:
+    Accuracy: 0.5
+    On the test set:
+    Accuracy: 0.5
+fails to break symmetry
+
+3-layer NN with large random initialization:
+    On the train set:
+    Accuracy: 0.83
+    On the test set:
+    Accuracy: 0.86
+too large weights 
+
+3-layer NN with He initialization:
+    On the train set:
+    Accuracy: 0.9933333333333333
+    On the test set:
+    Accuracy: 0.96
+recommended method
+```
+
+- Different initializations lead to different results
+
+- Random initialization is used to break symmetry and make sure different hidden units can learn different things
+
+- Don't intialize to values that are too large
+
+- He initialization works well for networks with <b>ReLU activations</b>
 
 
 
