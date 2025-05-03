@@ -39,19 +39,34 @@ for t = 1, ..., 5000
         A[L] = g[L](Z[L])
         //上面这些都是矢量化方法（1000 examples）
 
-    Compute cost J = \sum_{i = 1}^{l = 1000}L(\hat{y}^{(i)}, y^{(i)}) / 1000 
-
-    
+    Compute cost
+    Backprop to compute gradients
+    W[l] := W[l] - alpha dW[l], b[l] := b[l] - alpha db[l]
 ```
 
+$$
+Cost: J^{\{t\}} = \sum_{i = 1}^{l = 1000}L(\hat{y}^{(i)}, y^{(i)}) / 1000 + \frac{\lambda}{2000} \sum_l \|W^{[l]}\|_F^2
+$$
 
+<p>这是小批量梯度下降算法处理训练集一轮的过程，也叫做训练集的一次遍历（epoch），遍历是指过一遍训练集。在批量梯度下降法中对训练集的一轮处理只能得到一步梯度逼近，而小批量梯度下降法中对训练集的一轮 epoch，可以得到 5000 步梯度逼近</p>
 
+<p>当你有一个大型训练集时，小批量梯度下降法比梯度下降法快得多</p>
 
+</br>
 
+# Understanding mini-batch gradient descent
 
+</br>
 
+<p>在批量梯度下降算法中，每一次迭代将遍历整个训练集，用 J 来表示代价函数，那么他应该随着迭代单调递减。<b>如果某一次迭代他的值增加了，那么一定是哪里错了，比如学习率太大</b></p>
 
+![QQ_1746254521244](https://github.com/user-attachments/assets/3b91b052-81c7-4496-8d2f-d72c9ea1e31f)
 
+<p>而在小批量梯度下降中，同样画图就会发现并不是每一次迭代代价函数的值都会减小。从细节来看，每次迭代都是对 X{t} Y{t} 的处理，对通过他们计算出来的代价函数 J{t} 进行画图，就好像每次迭代都使用不同的训练集（也就是使用不同的 mini-batch），就会看到这样的图，他的趋势是向下的，但是也会有很多噪声</p>
+
+![QQ_1746255297935](https://github.com/user-attachments/assets/00391dab-ed0a-4bb5-aeb0-ffda7636bf40)
+
+<p>如果使用小批量梯度下降算法，经过几轮训练后，对 J{t} 作图很可能就像这样，并不是每次迭代都会下降，但是整体趋势必须是向下的</p>
 
 
 
