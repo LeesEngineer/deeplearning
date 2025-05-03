@@ -409,7 +409,35 @@ Accuracy: 0.95
 - Deep learning frameworks like tensorflow, PaddlePaddle, keras or caffe come with a dropout layer implementation. Don't stress - you will soon learn some of these frameworks.
 
 
+<p>Note:</p>
 
+- 只在训练时使用 Dropout，测试时不要使用（即不要随机丢弃节点）。
+
+- Dropout 需要在前向传播和反向传播时都进行处理。
+
+- 在训练时，每一层的输出要除以 keep_prob，以保持激活值的期望不变。
+
+</br>
+
+# Summary
+
+</br>
+
+<p>Regularization will drive your weights to lower values to help you reduce overfitting</p>
+
+```
+3-layer NN without regularization:
+    95%
+    91.5%
+3-layer NN with L2-regularization:
+    94%
+    93%
+3-layer NN with dropout:
+    93%
+    95%
+```
+
+<p>Note that regularization hurts training set performance! This is because it limits the ability of the network to overfit to the training set. But since it ultimately gives better test accuracy, it is helping your system.</p>
 
 
 
