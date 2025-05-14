@@ -1,4 +1,4 @@
-# Computer Vision
+![QQ_1747144519426](https://github.com/user-attachments/assets/85a99266-b7cf-4186-a97a-f9252859cf0f)# Computer Vision
 
 </br>
 
@@ -74,9 +74,29 @@
 
 <p>在这里检测出来的边缘看起来很厚，那只是因为在这个例子中用了一个很小的图像，如果用一个 1000*1000 的图像就有很好的效果。这个在中间的明亮区域只是用输出图像的方式来表示有一个强垂直边缘正好在图像的中心</p>
 
+</br>
 
+# More edge detection
 
+</br>
 
+<p>已经了解了卷积操作是如何进行垂直边缘检测的，接下来讨论正边缘和负边缘的差别（由亮变暗和由暗变亮的边缘过渡）以及其他几种边缘检测器，以及如何让算法来学习边缘检测器（而不是手动设定）</p>
+
+![QQ_1747144467451](https://github.com/user-attachments/assets/d8151634-08e8-4640-8ff6-8460aaf39e9c)
+
+<p>将颜色翻转，得到：</p>
+
+![QQ_1747144519426](https://github.com/user-attachments/assets/8eaa378c-4a4e-4dc1-a2c1-de9f215091fb)
+
+<p>亮暗关系是反的，30 变为 -30 表示由暗变亮，如果不在乎二者的区别，可以取绝对值，但这个过滤器确实能够区分两种边界</p>
+
+<hr>
+
+<p>关于 Horizontal：</p>
+
+![QQ_1747144999445](https://github.com/user-attachments/assets/5bed50f8-1200-4a98-9092-56ffb109faf7)
+
+<p></p>
 
 
 
