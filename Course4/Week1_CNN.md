@@ -1,5 +1,3 @@
-![QQ_1747144519426](https://github.com/user-attachments/assets/85a99266-b7cf-4186-a97a-f9252859cf0f)# Computer Vision
-
 </br>
 
 <p>之前看过 Image Classification，也许输入一个 64*64 的图像然后尝试判断</p>
