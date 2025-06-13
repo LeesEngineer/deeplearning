@@ -216,6 +216,7 @@ V2 / (0.0396)
 ```
 Momentum:
 On iteration t:
+    //initialize V_dW with 0
     Compute dW, db on current (mini-)batch
     V_dW = beta V_dW + (1 - beta) dW //计算 dW 的滑动平均
     V_db = beta V_db + (1 - beta) db
@@ -231,6 +232,40 @@ On iteration t:
 <p>在数次迭代之后，发现栋梁梯度下降的每一步，在垂直方向上的震荡非常小，且在水平方向上的运动得更快。让算法选择更直接的路径</p>
 
 <p>关于偏差校正，实际上，当在实现动量梯度下降时，没讲过有人会做偏差校正（但 V_dW 还是要初始化为 0），因为在十轮迭代后，滑动平均已经就绪，不再是一个偏差估计</p>
+
+</br>
+
+# RMSprop
+
+</br>
+
+<p>已经学习了如何使用动量来加速梯度下降，还有一种 RMSprop(全称为均方根传递--Root Mean Square prop)也可以加速梯度下降</p>
+
+![QQ_1749816128323](https://github.com/user-attachments/assets/35f94267-b763-4742-8883-84c9a863ddda)
+
+<p>假设坐标为 b->y w->x，希望减慢 b 方向上的学习，同时加速或至少不减慢 w 方向的学习。这就是 RMSprop 要做的</p>
+
+```
+On iteration t:
+    Compute dW, db on current mini-batch
+    S_dW = beta_2 S_dW + (1 - beta_2) dW ** 2
+    S_db = beta_2 S_db + (1 - beta_2) db ** 2
+    // 逐元素的平方操作
+
+    W := W - alpha dW / sqrt(S_dW + epsilon)
+    b := b - alpha db / sqrt(S_db + epsilon)
+    // epsilon 是为了防止除以的值过小，是一个非常小的值（1e-8）
+```
+
+<p>希望在 W 方向上学习速率较快，在 b 方向上减少震荡，工作原理：S_dW 会相对较小，S_db 会相对较大（根据导数），结果是垂直方向上的更新量会除以一个较大的数，有助于减少震荡，水平方向的更新量会除以一个较小的数</p>
+
+<p>直观理解是：在容易出现震荡的维度里，会得到一个更大的 S 值（即导数平方的加权平均），最后抑制了这些出现震荡的方向</p>
+
+![QQ_1749818091000](https://github.com/user-attachments/assets/ac76cd3c-2502-44c9-bc3a-c48ddfdcb813)
+
+<p>另一个收益是可以使用更大的学习率，而不用担心在垂直方向上发散</p>
+
+
 
 
 
