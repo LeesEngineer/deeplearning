@@ -265,6 +265,37 @@ On iteration t:
 
 <p>另一个收益是可以使用更大的学习率，而不用担心在垂直方向上发散</p>
 
+</br>
+
+# Adam optimization algorithm
+
+</br>
+
+<p>Adam 基本上是利用动量和 RMSprop 组合在一起</p>
+
+```
+V_dW = 0, S_dW = 0, V_db = 0, S_db = 0
+On iteration t:
+    Compute dW, db using current mini-batch
+    V_dW = beta_1 V_dW + (1 - beta_1) dW, V_db = beta_1 V_db + (1 - beta_1) db
+    S_dW = beta_2 S_dW + (1 - beta_2) dW^2, S_db = beta_2 S_db + (1 - beta_2) db^2
+    // 在 Adam 中实现了偏差校正
+    Vc_dW = V_dW / (1 - beta_1^t), Vc_db = V_db / (1 - beta_1^t)
+    Sc_dW = S_dW / (1 - beta_2^t), Sc_db = S_db / (1 - beta_2^t)
+
+    W := W - alpha * Vc_dW / sqrt(Sc_dW + epsilon), b := b - alpha * Vc_db / sqrt(Sc_db + epsilon)
+```
+
+<p>该学习算法已被证明对各种架构的许多不同神经网络非常有效，有许多超参数</p>
+
+```
+alpha : needs to be tune
+beta_1 : 0.9
+beta_2 : 0.999
+epsilon : 1e-8
+```
+
+<p>beta_1 计算导数的平均值。beta_2 用于计算平方的指数加权平均值</p>
 
 
 
