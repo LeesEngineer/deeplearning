@@ -297,13 +297,39 @@ epsilon : 1e-8
 
 <p>beta_1 计算导数的平均值。beta_2 用于计算平方的指数加权平均值</p>
 
+</br>
 
+# Learning rate decay
 
+</br>
 
+<p>学习率衰减可能有助于加快学习算法速度，如果要慢慢的降低 Alpha，那么在最初阶段，当你的 Alpha 仍然很高时，依旧可以进行相对较快的学习。但是随着 Alpha 变小，走的步数会越来越慢，最终会在最小值附近更窄的区域内摆动，而不是徘徊的很远</p>
 
+![QQ_1750064252191](https://github.com/user-attachments/assets/dd420426-e76a-42b4-bfe5-6a2e1c679b77)
 
+<p>慢慢降低 Alpha 背后的理念是：在最初的学习阶段，有能力迈出更大的步伐，但是随着学习接近趋同，学习速度变慢就可以迈出更小的步伐</p>
 
+$$
+\alpha = \frac{1}{1 + decayrate * epochnum}\alpha_0
+$$
 
+<p>除了这种公式，还有别的方法。如，指数衰减：</p>
+
+$$
+\alpha = 0.95^{epochnum} * \alpha_0
+$$
+
+<p>这将迅速降低学习率</p>
+
+<p>learning rate decay 的优先级较低</p> 
+
+</br>
+
+# The problem of local optima
+
+</br>
+
+<p>在深度学习的早期阶段，人们常常担心优化算法会陷入糟糕的局部最优之中</p>
 
 
 
