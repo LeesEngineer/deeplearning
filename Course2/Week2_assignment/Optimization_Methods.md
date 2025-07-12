@@ -48,6 +48,8 @@ for i in range(0, num_iterations):
 
 <p>通常其的表现优于梯度下降或随机梯度下降（特别是当训练集很大时）。</p>
 
+<p></p>
+
 
 
 
