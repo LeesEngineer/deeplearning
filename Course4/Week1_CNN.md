@@ -150,12 +150,32 @@
 
 - 其次是如果使用一个奇数大小的过滤器，这样可以有一个中心位置。在计算机视觉领域，有一个特殊点是很好的，这样就可以描述过滤器的位置
 
+</br>
+
+# Strided convolutions
+
+</br>
+
+<p>步幅卷积</p>
  
+```
+n*n by f*f
+padding p
+stride s
+    -> floor(((n + 2p -f) / 2) + 1) * floor(((n + 2p -f) / 2) + 1)
+```
 
+</br>
 
+# Convolutions over volumes
 
+</br>
 
+<p>讨论如何对三维图像进行卷积</p>
 
+<p>如果想对不是对灰度图像，而是对 RGB 图像（不再是 height * width，而是 height * width * #channels）检测特征，不应使用 3*3 的过滤器，而应该使用三维过滤器(3*3*3)。</p>
+
+<p>图像的通道数必须和过滤器的通道数相符</p>
 
 
 
