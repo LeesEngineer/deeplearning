@@ -177,19 +177,62 @@ stride s
 
 <p>图像的通道数必须和过滤器的通道数相符</p>
 
+<p>关于用途，举一个例子：如果想要检测图片中红色通道的边缘，则可以将红色通道对应过滤器设置为</p>
 
+```
+1 0 -1
+1 0 -1
+1 0 -1
+```
 
+<p>其余通道全部置为 0</p>
 
+<p>还有一个对于建立卷积神经网络非常重要的事情：如果想同时检测垂直边缘和水平边缘（换句话说，如果想要同时应用多个过滤器呢）</p>
 
+<img width="2258" height="1000" alt="QQ_1753253569883" src="https://github.com/user-attachments/assets/b0acac45-c4c5-4193-9504-73ab66e27c2e" />
 
+<p>第一个是垂直边缘过滤器，第二个是水平边缘过滤器</p>
 
+```
+(n * n * #channels) by (f * f * #channels)
+-> (n - f + 1) * (n - f + 1) * #NumOfFilter
+```
 
+<p>现在知道了如何在立方体上做卷积，接下来讨论如何应用卷积作为神经网络上的一层</p>
 
+</br>
 
+# One layer of a convolutional network
 
+</br>
 
+<img width="2258" height="1000" alt="QQ_1753253569883" src="https://github.com/user-attachments/assets/b0acac45-c4c5-4193-9504-73ab66e27c2e" />
 
+<p>对于上图，最终需要把这些输出变成单层卷积神经网络，还需要对每一个输出添加一个偏差（bias-use python's broadcasting），然后可以继续添加非线性转换（如 ReLU）</p>
 
+<img width="2266" height="1072" alt="QQ_1753254549753" src="https://github.com/user-attachments/assets/49f21c10-9140-49ce-9394-b8b54806c9bc" />
+
+<p>这就是卷积神经网络的一层，将其和普通的非卷积单层前向传播神经网络对应起来</p>
+
+```
+z[1] = W[1] a[0] + b[1]
+a[a] = g(z[1])
+```
+
+<p>RGB 图像对应 X，Filter 对应 W，通过卷积计算得出 4*4 矩阵对应 W[1] a[0]</p>
+
+<p>从 6*6*3 到 4*4*2，这就是一层卷积神经网络</p>
+
+<p>一个很好的特性是：不管输入的图像有多大，这里的参数个数保持不变。<b>这个特征使得卷积神经网络不太容易过拟合</b></p>
+
+```
+If layer l is a convolution layer:
+    f[l] = filter size            Input: n_H[l - 1] * n_W[l - 1] * n_c[l - 1]
+    p[l] = padding                Output: n_H[l] * n_W[l] * n_c[l]
+    s[l] = stride                 n[l] = floor((n[l - 1] + 2p - f) / s + 1)
+    n_c[l] = number of filters
+    Each filter is: f[l] * f[l] * n_c[l - 1]
+```
 
 
 
