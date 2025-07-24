@@ -234,15 +234,35 @@ If layer l is a convolution layer:
     Each filter is: f[l] * f[l] * n_c[l - 1]
 ```
 
+</br>
 
+# ConvNet
 
+</br>
 
+<p>关于 convolution network 一种常见的趋势是：随着建立的神经网络越来越深，通常开始的时候图像都是比较大的，高度和宽度在大致保持不变一段时间后，随着在神经网络中的深入，逐渐变小，而频道数一般会增加（最后展开成一个向量，传递给 softmax 或者一个 logistic）</p>
 
+<p>在一个典型的 ConvNet 中，通常有三种类型的层：</p>
 
+- Convolution(Conv)
 
+- Pooling(POOL)
 
+- Fully connected<FC>
 
+<p>虽然用 Conv 来设计神经网络，但大多数架构也有很多池化层和全连接层</p>
 
+</br>
+
+# Pooling layers
+
+</br>
+
+<p>ConvNets 通常使用池化层来减少展示量，以此来提高计算速度，并且使一些特征的检测功能更加强大</p>
+
+<img width="891" height="398" alt="QQ_1753349595950" src="https://github.com/user-attachments/assets/5bbcfa65-3e58-4971-8b63-48834aadb39f" />
+
+<p>如同使用了一个过滤器</p>
 
 
 
