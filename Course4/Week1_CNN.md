@@ -288,13 +288,19 @@ If layer l is a convolution layer:
 
 </br>
 
-<p></p>
+<p>If you have a 32 by 32 RGB image and try to recognize which one of the 10 digits is this. Let's throw the neural network to do this.</p>
 
+<img width="2316" height="1106" alt="QQ_1776952667398" src="https://github.com/user-attachments/assets/22e1879a-ccbc-4568-b4ab-2e1b0362d9a4" />
 
+<p>Full connected layer three connects 400 input units and 120 output units. The weight matrix is 120 by 400.</p>
 
+<img width="2244" height="988" alt="QQ_1776952865631" src="https://github.com/user-attachments/assets/76aab80b-542f-4cbc-b6be-b43f1e68ddef" />
 
+<p>Notice that conv layers tend to have relatively few parameters. And <b>the activation size tends to go down gradually as you go deeper in network. If it drops quickly, that's not great for performance as well.</b></p>
 
+<hr>
 
+<p>There are two advantages between use conv layers and not, paremeter sharing and sparsity of connections</p>
 
 
 
