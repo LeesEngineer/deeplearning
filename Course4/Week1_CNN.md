@@ -240,7 +240,7 @@ If layer l is a convolution layer:
 
 </br>
 
-<p>关于 convolution network 一种常见的趋势是：随着建立的神经网络越来越深，通常开始的时候图像都是比较大的，高度和宽度在大致保持不变一段时间后，随着在神经网络中的深入，逐渐变小，而频道数一般会增加（最后展开成一个向量，传递给 softmax 或者一个 logistic）</p>
+<p>关于 convolution network 一种常见的趋势是：随着建立的神经网络越来越深，通常开始的时候图像都是比较大的，<b>高度和宽度在大致保持不变一段时间后，随着在神经网络中的深入，逐渐变小，而频道数一般会增加</b> （最后展开成一个向量，传递给 softmax 或者一个 logistic）</p>
 
 <p>在一个典型的 ConvNet 中，通常有三种类型的层：</p>
 
@@ -258,19 +258,37 @@ If layer l is a convolution layer:
 
 </br>
 
-<p>ConvNets 通常使用池化层来减少展示量，以此来提高计算速度，并且使一些特征的检测功能更加强大</p>
+<p>Other than convolutional layers, convnets often also use pooling layers to reduce the size of representation, to speed the computation, as well as make some of the features that detects a bit more robust. </p>
+
+<p>Suppose we have a four by four imput and want to apply a type of pooling called max polling. It feels like that you are using a two by two filter with the stride of two.</p>
 
 <img width="891" height="398" alt="QQ_1753349595950" src="https://github.com/user-attachments/assets/5bbcfa65-3e58-4971-8b63-48834aadb39f" />
 
-<p>如同使用了一个过滤器</p>
+<p>Here's the intuition behind max pooling, think of this four by four region as some set of features (the activations in some layers). <b>The largest number means that it has detected a particular feature.</b> For example, the upper left-hand quadrant has this particular feature maybe it's a vertical edge.</p>
 
+<p><b>Clearly, the feature does exist in the upper left-hand quadrant. So during max pooling, a lot of features are detected anywhere. If filter detected these feature in some local region, then remains the larger number. If these features are not detected, then the max of all these numbers is still quite small.</b></p>
 
+<p>Max pooling has a set of hyperparameters and it has no parameters to learn. It's a fixed function.</p>
 
+<img width="1362" height="566" alt="QQ_1776915081794" src="https://github.com/user-attachments/assets/ba0560e8-29ec-4178-a53e-f815925231e0" />
 
+<p>If you have a three-d input, the out will have the same dimension: 5 by 5 by 2 -> 3 by 3 by 2. The max pooling computation is independently on each of these n_c channels.</p>
 
+<p>We also have average pooling:</p>
 
+<img width="1266" height="524" alt="QQ_1776915324128" src="https://github.com/user-attachments/assets/ace1aacf-7294-4cdf-9fc6-e68755b3152e" />
 
+<p>Max pooling is used more often than average pooling with one exception, which is sometimes you have a very deep input, you might use average pooling to collapse it, such as from 7*7*1000 to 1*1*1000.</p>
 
+<p>Usually max pooling doesn't use any padding.</p>
+
+</br>
+
+# Convolutional neural network
+
+</br>
+
+<p></p>
 
 
 
