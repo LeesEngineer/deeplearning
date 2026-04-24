@@ -300,13 +300,21 @@ If layer l is a convolution layer:
 
 <hr>
 
-<p>There are two advantages between use conv layers and not, paremeter sharing and sparsity of connections</p>
+<p>There are two advantages between use conv layers and not, paremeter sharing and sparsity of connections.</p>
 
+<p>You have a 32 by 32 by 3 images and five by five with six filters, and this gives you a 28 by 28 by 6 dimensional output. 32 by 32 by 3 is 3072, and 28 by 28 by 6 is 4704. If you creates a neural network with 3072 units in one layer and 4704 units in next layer, and you connect every one of these neurons. The weight matrix would be 3072 times 4704 which is about fourteen million. But the parameters in the conv layer is (5 * 5 + 1) * 6.</p>
 
+<p>There are two reasons that a convnet has a small number of parameters: </p>
 
+- Parameter sharing: A feature detector (such as a vertical edge detector) that's useful in one part of the image is probably useful in another part of the image.
 
+<img width="1042" height="286" alt="QQ_1777010673179" src="https://github.com/user-attachments/assets/9c58bb51-fb2a-4e14-adf1-33038c68aa1f" />
 
+<p>In this case we use the same nine parameters to compute 16 outputs.</p>
 
+- Sparsity of connections: In each layer, each output value depends only on a small number of inputs
+
+<p>Convolutional neural networks are very good at capturing <b>translation invariance</b>. In a picture, a cat shifted a couple of pixels to the right, is still pretty clearly a cat. <b>Convolutional structure helps the neural network encode the fact that an image shifted a few pixels should result in pretty similiar features and assign the same label.</b> </p>
 
 
 
