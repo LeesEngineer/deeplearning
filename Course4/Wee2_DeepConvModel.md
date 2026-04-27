@@ -1,5 +1,3 @@
-<img width="2124" height="1334" alt="QQ_1777256094243" src="https://github.com/user-attachments/assets/f4105d40-0def-4300-b7d0-38a7a49c069a" /></br>
-
 # Why look at case studies
 
 </br>
