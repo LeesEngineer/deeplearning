@@ -40,31 +40,57 @@ $$
 L(\hat{y}, y) = (\hat{y}_1 - y_1)^2
 $$
 
-<p></p>
+</br>
 
+# Landmark detection
 
+</br>
 
+<p>You can have a neural network just output x and y coordinates of important points in image, sometimes called landmarks that you want the neural network to recognize. </p>
 
+<p>Let's say you're building a face recognition application, and for some reason you want the algorithm to tell you where's the corner of the person's eye. You can let the final layer output two more numbers called lx and ly. If you want more corners of eye, just outputs l1x, l1y, l2x, l2y, ...</p>
 
+<p>We assume that there're sixty four landmarks on face. And maybe some points define the jawline. <b>By selecting the number of landmarks, and generating a label training set that contains all of these landmarks, then have the neural network outputs where are all the key landmarks on the face.</b></p>
 
+<img width="1640" height="658" alt="QQ_1777344878298" src="https://github.com/user-attachments/assets/4ce77144-1a90-454f-975c-666cc5262101" />
 
+</br>
 
+# Object dection
 
+</br>
 
+<p>Let's use a ConvNet to perform object detection, using a algorithm called the <b>sliding windows detection</b>.</p>
 
+<img width="658" height="1104" alt="QQ_1777347173020" src="https://github.com/user-attachments/assets/f2df8b6d-2825-443c-9f67-82a47f91172e" />
 
+<p>We have this training set. For our purpose, we use closely cropped image, meaning that the image is pretty much only the car, cut out anything else there's not part of a car. Then you can train a ConvNet.</p>
 
+<p><b>Once you've trained up this ConvNet, you can then use it in sliding windows detection</b>. </p>
 
+<p>Here is a test image:</p>
 
+<img width="698" height="696" alt="QQ_1777347472282" src="https://github.com/user-attachments/assets/237c56c6-a52f-48da-a772-623ce295af1b" />
 
+<p>What you do is picking a certain windows size. And you input into this ConvNet a small rectangular region. <b>And have the ConvNet make a prediction, is there a car?</b>.</p>
 
+<img width="800" height="1100" alt="QQ_1777347713102" src="https://github.com/user-attachments/assets/edecd738-9751-4718-aaa9-c77d8b5e7b8f" />
 
+<p>Then the algorithm will process input a second image, and run the ConvNet again. Until you've slid the window across every position in the image.</p>
 
+<img width="708" height="696" alt="QQ_1777347781505" src="https://github.com/user-attachments/assets/07402136-bf60-4528-93bf-018f5779e1f9" />
 
+<p>Repeated it, but now we use a larger window.</p>
 
+<img width="710" height="706" alt="QQ_1777347921806" src="https://github.com/user-attachments/assets/96607228-e100-4c80-864a-4c2e24c4a826" />
 
+<p>This algorithm has a large computational cost, but it runs okey.</p>
 
+</br>
 
+# Convolutional Implementation of Sliding Windows
+
+</br>
 
 
 
