@@ -162,65 +162,123 @@ $$
 
 <p>Second, this is a convolutional implementation. You didn't run this algorithm nine times. It runs very fast, <b>so this works even for real-time object detection.</b></p>
 
-<p></p>
+</br>
 
+# Intersection Over Union (IoU) Function
 
+</br> 
 
+<p>We use a function called intersection over union both for evaluating object detection algorithm, and adding another component to your algorithm.</p>
 
+<p>What the IoU function does is computing the intersection over union of these two bounding boxes.</p>
 
+<img width="614" height="618" alt="QQ_1777515451047" src="https://github.com/user-attachments/assets/fa9f387c-eb14-4ed8-b6f5-9fc65a7a95f1" />
 
+<p>Correct if IoU >= 0.5. 0.5 is human-chosen convention. The higher the IoUs, the accurate the bounding box.</p>
 
+<p>This is one way to map localization to accuracy, where you just count up the times of algorithm correctly detects and localizes an object.</p>
 
+</br>
 
+# Non-max Suppression
 
+</br>
 
+<p>Your algorithm may find multiple detection of the same object. Non-max suppression makes sure that your algorithm detects each object only once.</p>
 
+<p>Technically, only one of the grid cells should predict that there is a car. But in practice, you're running a object classification and localization algorithm <b>for every one of these grid cells. Another grid cells might think that the center of the car is in it, and so might the other cells.</b></p>
 
+<img width="1104" height="876" alt="QQ_1777517506121" src="https://github.com/user-attachments/assets/90bed26d-1f83-4a73-b09e-40016f0e47d5" />
 
+<img width="1094" height="874" alt="QQ_1777518224548" src="https://github.com/user-attachments/assets/b3da8149-8f3f-413d-8966-a20411a0a704" />
 
+<p>When you run the algorithm, you might end up with multiple detections of each object. So what non-max suppression does is cleaning up these detection. It first looks at the probablities associated with each of these detections count on the p_c. It first takes the largest one, and says that's my most confident detection. Then non-max suppression part looks at all of the remaining rectangles. <b>All the ones that have a high IoU with our most confident detection will get suppressed. And get rid of them.</b></p>
 
+<img width="1090" height="858" alt="QQ_1777519546271" src="https://github.com/user-attachments/assets/dbdf211e-5c7c-43d9-83d8-1dd2cdf355d9" />
 
+<hr>
 
+<p>First run the algorithm on this 19 by 19 grid cells image. You get 19 by 19 by 8 output.</p>
 
+<img width="674" height="672" alt="QQ_1777519680350" src="https://github.com/user-attachments/assets/b6e64a08-6d1d-4d1b-93a5-b215e008c64a" />
 
+<p>Then discard all boxes with p_c <= 0.6</p>
 
+<p>While there are any remaining boxes:</p>
 
+- Pick the box with the largest p_c, and output that as a prediction.
 
+- Discard any remaining box with IoU >= 0.5 with the box output.
 
+</br>
 
+# Anchor Boxes
 
+</br>
 
+<p>Each grid cells can only detect only one object. What if a grid cell want to detect multiple objects.</p>
 
+<img width="716" height="718" alt="QQ_1777529330160" src="https://github.com/user-attachments/assets/1b5dd74d-8bce-40d1-a355-f905df9c1716" />
 
+<p>Notice that the midpoint of the pedestrian and the midpoint of the car fall into the same grid cell.</p>
 
+<p>The idea of anchor boxes is predefining two different shapes called anchor box.</p>
 
+<img width="1396" height="730" alt="QQ_1777529530549" src="https://github.com/user-attachments/assets/3b8d06dc-3a63-4bc6-bc38-d55298490429" />
 
+<p>Now associate two predictions with the two anchor boxes. Define y as followed:</p>
 
+<img width="914" height="738" alt="QQ_1777529643461" src="https://github.com/user-attachments/assets/41c58c74-4232-4e53-b019-d093c97dd6f6" />
 
+<p>Because the shape of pedestrian is more similar to the anchor box 1. So use the first eight number to encode the pedestrian. And the next eight numbers are all associated with the detected car. The output is going to be 3 by 3 by 16.</p>
 
+<p>Previously, each object in training image is assigned to grid cell that contains that object's midpoint. With the two anchor boxes, each onject in training image is assigned to grid cell that contains object's midpoint and anchor box for the grid cell with highest IoU. Each object assigned to a (grid cell, anchor box) pair. That's how that object gets encoded in the target label.</p>
 
+<p>Anchor box allows your learning algorithm to specialize better in particular if your data set has some tall skinny objects like pedestrians and some wide objects cars .</p>
 
+<p>People used to choose anchor box by hand.</p>
 
+</br>
 
+# YOLO Algorithm
 
+</br>
 
+<p>Let's see how you construct your training set.</p>
 
+<img width="1958" height="1100" alt="QQ_1777723504473" src="https://github.com/user-attachments/assets/cffa2eff-09d1-48d7-b3a4-fb2cf5b6f0d8" />
 
+<p>For each grid cell, get 2 predicted bounding boxes.</p>
 
+<img width="608" height="604" alt="QQ_1777729742694" src="https://github.com/user-attachments/assets/7b23d468-4798-4173-95e5-78f2ede9a869" />
 
+<p>Get rid of low probability predictions.</p>
 
+<img width="606" height="592" alt="QQ_1777729850818" src="https://github.com/user-attachments/assets/bc3e5e45-4fe4-4070-8079-6bbc5f542ebc" />
 
+<p>For each class (pedestrian, car, motorcycle) use non-max suppression to generate final predictions.</p>
 
+<img width="606" height="604" alt="QQ_1777729956738" src="https://github.com/user-attachments/assets/cb4f15ba-5906-4327-81a4-b33a87397518" />
 
+</br>
 
+# Region proposals
 
+</br>
 
+<p>I tend to use the region proposal set of algorithms a bit less often.</p>
 
+<p>If you use the sliding windows and run it across all of these different windows to see if there is anything. <b>One downside is that it classifies a lot of regions where there's clearly no object.</b></p>
 
+<img width="698" height="610" alt="QQ_1777731719857" src="https://github.com/user-attachments/assets/6fd41500-7c43-45dd-bbe2-d753a78f95dd" />
 
+<p>So there's an algorithm called R-CNN. It tries to pick a few regions that makes sense to run your ConvNet classifier, rather that running your sliding windows on every single window.</p>
 
+<p>The way to perform the region proposals is to run an algorithm called segmentation algorithm.</p>
 
+<img width="672" height="586" alt="QQ_1777804202818" src="https://github.com/user-attachments/assets/f690eaed-459d-4378-bb40-5a6585abc1c7" />
 
+<p>You get this image. To figure out where could be objects.</p>
 
 
 
