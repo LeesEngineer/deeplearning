@@ -32,28 +32,43 @@
 
 </br>
 
+<p>By minimize J, you can generate images you want.</p>
+
+<img width="1156" height="1094" alt="QQ_1778122289504" src="https://github.com/user-attachments/assets/3c2ec22f-c030-45d2-96d2-aa22d0b712a1" />
+
+`J(G) = alpha * J_content(C, G) + beta * J_style(S, G)`
+
+<p>J_x measures how similar is the x image to the generate image. I think one hyperparameter could e enough.</p>
+
+<hr>
+
+<p>Now find the generated image G.</p>
+
+- Initiate G randomly : G -> 100 by 100 by 3 (a moise image)
+
+- Use gradient descent to minimize J(G) ; `G = G - dJ(G) / dG`
+
+<img width="788" height="250" alt="QQ_1778123317097" src="https://github.com/user-attachments/assets/ec5f860c-3d53-4fcc-b529-9be60ba2a8ee" />
+
+<img width="322" height="1078" alt="QQ_1778123330985" src="https://github.com/user-attachments/assets/8e94aa8b-93d7-4806-a40c-00920264ccac" />
+
+</br>
+
+## Content Cost Function
+
+</br>
+
+<p>Say you use hidden layer l to compute content cost. <b>If l is a very small number if you use layer 1, then algorithm would force your generate image's pixel values to be very similar to your content image. Whereas if you use a very deep layer, then it's just asking if there's a dog in your content image then make sure there's a dog somewhere in generated image.</b> layer l should be neither too shallow nor to deep</p>
+
+<p>Then use a pre-trained ConvNet (e.g., AlexNet or VGG).</p>
+
+<p>You want to measure how similar is the content image to the generated image.</p>
+
+<p>Let a[l](c) and a[l](G) be the activation of layer l on the images. If a[l](c) and a[l](G) are similar, both images have similar content.</p>
+
+`|| a[l](C) - a[l](G)||^2`
+
 <p></p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
