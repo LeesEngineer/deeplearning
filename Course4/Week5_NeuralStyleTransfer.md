@@ -2,25 +2,37 @@
 
 </br>
 
-# What are deep ConvNets learning
+# What are deep ConvNets learning : Max Activation Visualization
+
+</br>
+
+<img width="2906" height="516" alt="QQ_1778120007504" src="https://github.com/user-attachments/assets/315d1581-4115-4431-be27-a397138f3a40" />
+
+<p>Pick a unit in layer 1. Fine the nine image patches that maximize the unit's activation. Now plot which image patch maximize that unit's activation</p>
+
+<img width="204" height="202" alt="QQ_1778120172864" src="https://github.com/user-attachments/assets/5f12afdc-677e-499c-998d-7951c48f7e5b" />
+
+<p>It's looking for a edge or a line looks like this:</p>
+
+<img width="142" height="138" alt="QQ_1778120200880" src="https://github.com/user-attachments/assets/34d16ebc-cbe1-4e2d-9369-5870d8628dfc" />
+
+<p>Repeat for other units.</p>
+
+<img width="2754" height="512" alt="QQ_1778121820586" src="https://github.com/user-attachments/assets/832dab5b-9e7d-466a-b68a-6170d71d1c5b" />
+
+<p>Units in layer 1 often look for relatively simple features.</p>
+ 
+<p>In deep layer, a hidden unit will see a larger region of image patches.</p>
+
+<p>Layer 2 looks like it's detecting more complex shapes and patterns. A unit in layer 3 even starts to detect person.</p>
+
+</br>
+
+# Cost Function
 
 </br>
 
 <p></p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
