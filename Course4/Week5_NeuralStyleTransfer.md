@@ -66,13 +66,19 @@
 
 <p>Let a[l](c) and a[l](G) be the activation of layer l on the images. If a[l](c) and a[l](G) are similar, both images have similar content.</p>
 
-`|| a[l](C) - a[l](G)||^2`
+`J_content(C, G) = || a[l](C) - a[l](G)||^2`
+
+</br>
+
+## Style Cost Function
+
+</br>
+
+<img width="2260" height="364" alt="QQ_1778157112365" src="https://github.com/user-attachments/assets/7f456446-e695-457e-bffc-27226d99a37f" />
+
+<p>Say you area using layer l's activation to measure "style". We <b>define style as correlation between activations across channels.</b></p>
 
 <p></p>
-
-
-
-
 
 
 
