@@ -78,24 +78,55 @@
 
 <p>Say you area using layer l's activation to measure "style". We <b>define style as correlation between activations across channels.</b></p>
 
-<p></p>
+<img width="380" height="352" alt="QQ_1778307001945" src="https://github.com/user-attachments/assets/60a240dc-0756-41d6-b618-6326b80e63fd" />
 
+<p>How to compute correlation between activations across different channels.</p>
 
+<p>We think activations across two different channels as number of pairs. <b>Style is not the position of an object, but rather the statistical relationship between features.</b></p>
 
+<p><b>And in CNN, a channel defines a feature detector.</b></p>
 
+<p>So, we don't care about features, instead we care about the correlation between features.</p>
 
+<img width="394" height="354" alt="QQ_1778309087339" src="https://github.com/user-attachments/assets/4df93ce9-52f1-4ebe-b422-3be68d243fcf" />
 
+<img width="492" height="480" alt="QQ_1778309125423" src="https://github.com/user-attachments/assets/d52ed918-7f37-4cc4-bf42-d3cef7c41a22" />
 
+<p>Say the red channel corresponds to the (0, 1) neuron, and try to figure out if there's this vertical texture. And the second channel corresponds to the (1, 0) neuron, which vaguely looking for orange colored patches.</p>
 
+<p>If they are highly correlated what that means is whatever part of this image has the vertical texture, then that part will probably has this orange-ish tint. As for "uncorrelated", it's probably won't have that tint.</p>
 
+<p>Correlation gives you one way to measure how often these different high level features occur together and don't occur together.</p>
 
+<p>What you can do is measuring the degree of the first channel is correlated or uncorrelated with the other channels in generated image. Then you can measure how similar is the style of G to the style of S.</p>
 
+</br>
 
+## Style Matrix
 
+</br>
 
+<p>For G and S, you need to compute a style matrix.</p>
 
+<p>Let a^[l]_{i, j, k} = activation at (i, j, k). And G^{[L](S)} is n[l]_c by n[l]_c.</p>
 
+```
+G^{[L](G)}_{kk'} = \sum_i^nh[l] \sum_j^nw[l] (a[l]_ijk * a[l]_ijk')
+G^{[L](G)}_{kk'} = \sum_i^nh[l] \sum_j^nw[l] (a[l]_ijk * a[l]_ijk')
+```
 
+<p>This is an unnormalized cross-covariance, because we're not subtracting the mean.</p>
+
+<p>G is nc by nc, in order to measure how correlated each <b>pair</b> of activations from different channels is.</p>
+
+```
+J[l]_style(S, G) = ||G[l](S) - G[l](G)||^2 / (2*nh * nw * nc)^2
+J_style(S, G) = \sum_l lambda[l] J[l]_style(S, G)
+```
+
+<p>We use a additional set of parameters which we denote as lambda[l].</p>
+
+<p>J allows you use different layers, both the earlier layers which measure relatively simpler low level features like edges, as well as some later layers which measure high level features.</p>
 
 
 
