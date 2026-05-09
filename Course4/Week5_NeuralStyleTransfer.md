@@ -128,11 +128,27 @@ J_style(S, G) = \sum_l lambda[l] J[l]_style(S, G)
 
 <p>J allows you use different layers, both the earlier layers which measure relatively simpler low level features like edges, as well as some later layers which measure high level features.</p>
 
+</br>
 
+# 1D and 3D generalizations of models
 
+</br>
 
+<img width="1114" height="426" alt="QQ_1778317742748" src="https://github.com/user-attachments/assets/6f33bd5d-fc57-46d2-b047-56c11cdaab50" />
 
+<p>For EKG, you may need this 5 dimensional filter.</p>
 
+`14 conv 5 = 10`
+
+<p>You can detect the different heartbeats in an EKG signal.</p>
+
+<hr>
+
+<p>Video needs 3D CNN. 2D CNN only display a signal frame. But timeing information is crucial. For example, a person is walking, a ball is moving. These are all required to understand the changes between consecutive frames.</p>
+
+<p>CT scan also is 3D data, which gives a three-dimensional model of your body. What CT scan does is it takes different slices through your body.</p>
+
+<img width="528" height="530" alt="QQ_1778320287397" src="https://github.com/user-attachments/assets/d15c9061-0435-4a81-86aa-813156d7251e" />
 
 
 
