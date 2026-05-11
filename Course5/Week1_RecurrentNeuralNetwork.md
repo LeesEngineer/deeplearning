@@ -1,4 +1,4 @@
-<img width="1110" height="694" alt="QQ_1778499790032" src="https://github.com/user-attachments/assets/8f42e259-0095-4134-a8a1-b4827944f5a5" /><img width="1140" height="750" alt="QQ_1778499769526" src="https://github.com/user-attachments/assets/74e25eb8-f23c-44ab-872e-a4035a74eb10" /><img width="2576" height="1012" alt="QQ_1778498322340" src="https://github.com/user-attachments/assets/a6bd4aa9-115a-463c-89f5-1b63d342da30" /><img width="2304" height="1080" alt="QQ_1778326775514" src="https://github.com/user-attachments/assets/89dcb5de-5329-472d-bd8f-411efe570446" />
+<img width="2304" height="1080" alt="QQ_1778326775514" src="https://github.com/user-attachments/assets/89dcb5de-5329-472d-bd8f-411efe570446" />
 
 <p>All of these problems can be addressed as supervised learning with label data (X, Y) as the training set. In some situation, both the X and Y are sequences.</p>
 
@@ -116,6 +116,8 @@ yhat<1> = g(w_ya a<1> + by)
 <img width="1710" height="792" alt="QQ_1778500230465" src="https://github.com/user-attachments/assets/ba86ddc6-24d4-4b17-b146-79b9456d2082" />
 
 <p>First, read the inputs. And having done that, you then have the neural network output the translation. The first part is an encoder, and the second part is a decoder.</p>
+
+<img width="2076" height="1004" alt="QQ_1778501023820" src="https://github.com/user-attachments/assets/fec03693-ee55-4cf5-bdb9-6af8fa0da65b" />
 
 
 
