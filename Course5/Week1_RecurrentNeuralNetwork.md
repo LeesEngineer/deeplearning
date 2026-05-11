@@ -1,5 +1,3 @@
-<img width="1706" height="728" alt="QQ_1778426847425" src="https://github.com/user-attachments/assets/bec4c617-9c11-4a91-91f2-2f98c3171344" /><p>Why Sequence models</p>
-
 <img width="2304" height="1080" alt="QQ_1778326775514" src="https://github.com/user-attachments/assets/89dcb5de-5329-472d-bd8f-411efe570446" />
 
 <p>All of these problems can be addressed as supervised learning with label data (X, Y) as the training set. In some situation, both the X and Y are sequences.</p>
