@@ -119,34 +119,69 @@ yhat<1> = g(w_ya a<1> + by)
 
 <img width="2076" height="1004" alt="QQ_1778501023820" src="https://github.com/user-attachments/assets/fec03693-ee55-4cf5-bdb9-6af8fa0da65b" />
 
+</br>
 
+# Language Model and Sequence Generation
 
+</br>
 
+<p>Use RNN to build a language model.</p>
 
+<p>Speech Recognition:</p>
 
+- The apple and pair salad
 
+- The apple and pear salad
 
+<p>When you say a sentence, the second is much more likely. A good speech reconition would output rightly even though the two sentences sound exactly the same. The way to let the system pick the second sentence is using a language model, which tells it what the probablity of either of two sentences are.</p>
 
+```
+P(first) = 3.2 * 10^-13
+P(second) = 5.7 * 10^-10
+```
 
+<p>Language model output a sequence, and we call it `y<1> y<2> y<3> ... y<Ty>`</p>
 
+<p>What a language model does is estimating the probablity of that particular sequence</p>
 
+`P(y<1>, y<2>, y<3>, ..., y<Ty>)`
 
+<hr>
 
+<p>Training Set: large corpus of English texts.</p>
 
+<p>Let's say you get a sentence as followed: "Cats average 15 hours of sleep a day". The first you do is to <b>tokenize the sentence (form a vocabulary: map these words to one-hot vectors)</b>. You also need to add an extra token called <EOS> to indicate the end.</p>
 
+<p>When you do tokenization step, you can decide whether or not the period should be a token as well.</p>
 
+<p>If there is a word that isn't in your vocabulary, you can <b>replace</b> it with a unique token <UNK>. Then build a RNN to model the chance of these different sequences.</p>
 
+<p>At time zero, you're going to compute a<1>. x<1> and a<0> is all zero. <b>What a<1> does is making a softmax prediction to try to figure out what is the probablity of the first word yhat<1></b>.</p>
 
+<p>Then the RNN steps forward to the next step, trys to figure out what is the second word. But we will <b>give it the correct first word (Cats), so that's yhat<1>. This is why y<1> is equal to x<2>. The output is again predicted by a softmax.</b></p>
 
+<p><b>RNN only given that what had came previously. RNN outputs P(____ | "Cats"), P(____ | "Cats average") (conditional probablity)</b>. Such as, given the first three words, what is the distribution over the next word.</p>
 
+`P(y<1>, y<2>, y<3>) = P(y<1>) * P(y<2> | y<1>) * P(y<3> | y<1>, y<2>)`
 
+<p>P(The apple and pear salad) > P(The apple and pair salad)</p>
 
+<p>At the end, this happens to be the EOS token. There is a high chance of P(<UNK> | "<The sentence>")</p>
 
+<img width="2286" height="696" alt="QQ_1778583983461" src="https://github.com/user-attachments/assets/b5c905b2-102f-4cfb-b171-fe0af9885700" />
 
+<p>Loss function: </p>
 
+```
+L(yhat<t>, y<t>) = - \sum_i y_i^<t> log yhat_i^<t>
+L = \sum_t L<t>(yhat<t>, y<t>)
+```
 
+</br>
 
+# 
 
+</br>
 
 
 
