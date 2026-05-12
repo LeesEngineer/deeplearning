@@ -179,23 +179,33 @@ L = \sum_t L<t>(yhat<t>, y<t>)
 
 </br>
 
-# 
+# Sampling Novel Sequence
 
 </br>
 
+<p>After you train a sequence model, one of the ways you can informally get a sense of what is learned is to have a sampling novel sequence.</p>
 
+<img width="1648" height="514" alt="QQ_1778591227552" src="https://github.com/user-attachments/assets/34faf071-95cd-4dc4-989d-0ea8f79614d6" />
 
+<p>For sampling, you do something different. First, sample what is the first word you want your model to generate. x<1> and a<0> are equal to zero. You get softmax probablity over possible outputs. Then you randomly sample according to this softmax distribution. You get P(a) or P(aaron) or P(zulu).</p>
 
+<p>Then take the yhat<1> you just sampled and pass that to x<2> to get yhat<2>. Keep sample to get P(____ | ...)</p>
 
+<p>Repeat until an <EOS> is encountered or the set number of timesteps is reached. You can reject any sample that came out <UNK> token and resample from the rest, or you can just leave it in the output.</p>
 
+<hr>
 
+<p>You can also use character level language model ([a, b, ..., 9]). But the main disadvantage of it is that you end up with much longer sequences. many sentences will have 10 to 20 words but may have many dozens of characters. <b>So character level language model is not as good as word level language model at capturing long range dependencies between how the earlier parts of the sentence affect the later parts of the sentence.</b></p>
 
+<p>And it's more computationally expensive to train. But in some special cases we look at more character level models, <b>where you might need to deel with unknown words a lot or you have a more specialized vocabulary.</b></p>
 
+<img width="1130" height="662" alt="QQ_1778594117361" src="https://github.com/user-attachments/assets/42d599da-fabf-43ef-a4b4-d42c4767c565" />
 
+</br>
 
+# Vanishing gradients  with RNNs
 
-
-
+</br>
 
 
 
