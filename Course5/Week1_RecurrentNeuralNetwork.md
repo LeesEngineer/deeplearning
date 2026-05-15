@@ -207,21 +207,37 @@ L = \sum_t L<t>(yhat<t>, y<t>)
 
 </br>
 
+<img width="1674" height="574" alt="QQ_1778639879119" src="https://github.com/user-attachments/assets/df0be216-1e4a-44e4-89e1-057248864911" />
 
+<p>You have these two sentence: "The cat, which already ate..., was full." and "The cats, which ..., were full."</p>
 
+<p>Cat--was Cats--were</p>
 
+<p>This is one example of when language can have very long-term dependencies. Where its word at this much earlier can affect what needs to come much later in the sentence. The RNN we have seen so far is not very good at <p>capturing very long-term dependencies.</p></p>
 
+<img width="2158" height="324" alt="QQ_1778641256556" src="https://github.com/user-attachments/assets/4295f06b-1b12-4fc6-b876-00aa6baa2313" />
 
+<p>To explain why, you might remember from ourearly discussion of training very deep neural network, that we talked about the vanishing gradients. When you run forward propagation and backword propagation through this very deep nn, <b>the gradient from output y would have a very hard time propagating back to affect the weights of these earlier layers to affect the computations in the earlier layers.</b></p>
 
+<p>For an RNN, because of the same vanishing gradients problem, it might be difficult to get a nn to realize that it needs to memorize a single noun or a plural noun, so that later on in the sequence that can generate either was or were. The stuff in the middle could be arbitrarily long.</p>
 
+<p>Because of this problem the basic RNN model has many <b>local influences</b>, meaning that the output <b>yhat3 is mainly influenced by values close to yhat3</b>.</p>
 
+<p><b>It's difficult for the output to be strongly influenced by an output that was very early in the sequence.</b></p>
 
+<p><b>Because whatever the output is, it's very difficult for the area to back propagate to the beginning of the sequence.</b></p>
 
+<p>When exploding gradients happens, it can be catastrophic because the exponentially large gradients can cause your parameters to become so large that your nn parameters get really  messed up.</p>
 
+<p>If you do find exploding gradients, one solution is applying <b>gradient clipping</b>. Look at your gradient vectors, if a number is bigger than some threshold, then <b>re-scale your gradient vector (clips according to some maximum values)</b>. This is a relatively robust solution.</p>
 
+</br>
 
+# Gated Recurrent Unit (GRU)
 
+</br>
 
+<p></p>
 
 
 
