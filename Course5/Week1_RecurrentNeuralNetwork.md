@@ -237,42 +237,87 @@ L = \sum_t L<t>(yhat<t>, y<t>)
 
 </br>
 
-<p></p>
+<p>GRU is a modification to the RNN hidden layer which makes it much better capturing long range connections and helps a lot with the vanishing gradient problem.</p>
 
+```
+a<t> = g(W_a[a<t-1>, x<t>] + b_a)
+```
 
+<img width="1000" height="966" alt="QQ_1778852498633" src="https://github.com/user-attachments/assets/0a2882c6-63d5-4165-a190-0b8b6fa0ddb0" />
 
+<p>As we read the sentence "The cat, which already ate ..., was full" from left to right, the GRU unit is going to have a new variable called c which stands for memory cell. It provides a bit of memory to remember, for example, whether cat was singular or plural.</p>
 
+<p>At time t, we have the memory cell c<t> = a<t>. At every time-step, we're going to consider overwriting the memory cell with a value ctilde<t>.</p>
 
+`ctilde<t> = tanh(W_c [c<t-1>, x<t>] + b_c)`
 
+<p>The idea of GRU is that we have a gate called gamma_u (u stands for update gate). The value is zero or one. The following equation is the main part of GRU.</p>
 
+`gamma_u = sigmoid(W_u [c<t-1>, x<t>] + b_u)`
 
+<p>For most of the possible ranges of the input, the sigmoid function is either very close to 1 or very close to 0. </p>
 
+<p>We use gamma_u to denote the gate. We are thinking of updating c using ctilde, then <b>the gate will decide whether or not we actually update it.</b></p>
 
+<p>Maybe this memory cell c is going to be set to either zero or one whether the subject is singular or plural. Then GRU would memorize the value of the c<t> until it was faced with the choice between was or were. If c<t> is equal to one, then use the choice was. </p>
 
+<p>The job of gamma_u is decide when do you update these values. For example, when you see the phrase "the cat", that would be a good time to update this bit. Then when you're done using it, I don't need to memorize anymore.</p>
 
+`c<t> = gamma_u ctilde<t> + (1 - gamma_u) c<t-1>`
 
+<p>If gate is one, then go ahead and update that bit.</p>
 
+<img width="1058" height="282" alt="QQ_1778930948549" src="https://github.com/user-attachments/assets/a7e04b25-269f-405f-b09b-c9fed546fd85" />
 
+- The larger the Gamma_u: The more readily "new content" is trusted
 
+- The smaller the Gamma_u: The more "previous memories" are retained
 
+<img width="1126" height="768" alt="QQ_1778931682116" src="https://github.com/user-attachments/assets/83a1825b-fd90-4618-b3b5-4d7aaad67304" />
 
+<p>Gate is quite easy to set to zero. So c<t> is very very close to c<t-1>, which is helpful for maintaining the value of cell and <b>makes it doesn't suffer from vanishing gradient problem.</b>.</p>
 
+<p>This allows a nn runs on long range dependencies.</p>
 
+<p>c<t>, ctilde<t> and gamma_u have the same dimension. The value in gamma_u tells you which are the bits you want to update, so that <b>you can keep some bits constant while update other bits</b>. </p>
 
+<p>Some bits tells you the <b>singular or plural cats</b>, and <b>some bits are used to realize that you're talking about food.</b></p>
 
+</br>
 
+## Full GRU
 
+</br>
 
+```
+ctilde<t> = tanh(W_c [gamma_r * c<t-1>, x<t>] + b_c)
 
+gamma_u = sigmoid(W_u [c<t-1>, x<t>] + b_u)
 
+gamma_r = sigmoid(W_r [c<t-1>, x<t>] + b_r)
 
+c<t> = gamma_u ctilde<t> + (1 - gamma_u) c<t-1>
+```
 
+<p>We add one more gate gamma_r, and you can think of r as standing for relevance. We call gamma_r as <b>reset gate</b>.The gate tells you how relevant is c<t-1> to c<t>.</p>
 
+<p><b>The purpose of gamma_r is to determine how many old memories to refer to when generating new memories.</b></p>
 
+<hr>
 
+<p>Gamma_u does indeed frequently approach 0 or 1. But it's a vector, so different dimensions in c<t> handle different information. Therefore:</p>
 
+- Some dimensions are not updated for a long time.
 
+- Some dimensions are updated every round.
 
+- Some dimensions are updated slowly.
+
+</br>
+
+# 
+
+</br>
 
 
 
