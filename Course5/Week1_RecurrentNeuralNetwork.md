@@ -315,9 +315,32 @@ c<t> = gamma_u ctilde<t> + (1 - gamma_u) c<t-1>
 
 </br>
 
-# 
+# LSTM (long short term memroy) Unit
 
 </br>
+
+<p>LSTM is more powerful than the GRU.</p>
+
+<p>In LSTM, we will no long have the case that a<t> is equal to c<t>. And we're not using gamma_r.</p>
+
+<p>One new property of LSTM is that instead of having one update gate, we're going to replace "gamma_u" and "1 - gamma_u" with two separate gate. We call the another gate as forget gate.</p>
+
+<p>And we have a new output gate.</p>
+
+```
+ctilde<t> = tanh(W_c [gamma_r * a<t-1>, x<t>] + b_c)
+
+gamma_u = sigmoid(W_u [a<t-1>, x<t>] + b_u)
+
+gamma_f = sigmoid(W_f [a<t-1>, x<t>] + b_f)
+
+gamma_o = sigmoid(W_o [a<t-1>, x<t>] + b_o)
+
+c<t> = gamma_u * ctilde<t> + gamma_f * c<t-1>
+
+a<t> = gamma_o * c<t>
+```
+
 
 
 
