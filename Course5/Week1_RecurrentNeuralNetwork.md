@@ -341,21 +341,51 @@ c<t> = gamma_u * ctilde<t> + gamma_f * c<t-1>
 a<t> = gamma_o * c<t>
 ```
 
+<img width="1144" height="704" alt="d03e450e7437d63cdea602192f37898d" src="https://github.com/user-attachments/assets/8c23dd15-f901-42b4-9802-51cd433faa55" />
 
+<img width="2862" height="534" alt="QQ_1779024213211" src="https://github.com/user-attachments/assets/402a766e-90a8-4024-b312-60680a430467" />
 
+<p>As long as you set the update gate and the forget gate appropriately, it's relatively easy for LSTM to have some values like c<0> be passed all the way to the right, you know, maybe have c<3> equal c<0>. That's way LSTM or GRU is good at memorizing certain values.</p>
 
+<p>You can also use <b>[a<t-1>, x<t>, c<t-1>]</b>. This is <b>peephole connection</b>.</p>
 
+</br>
 
+# Bidirectional RNN
 
+</br>
 
+<p>Using bidirectional RNN allows you get information from the future.</p>
 
+<p>Say you have two strings: "He said, 'Teddy bears are one sale!'" and "He said, 'Teddy Roosevelt was a great President'".</p>
 
+<p>To figure out whether the third word Teddy is a part of the person's name, it's not enough to just look at the first part of the sentence. So to tell if y<3> is zero or one, you need more information than just the first three words.</p>
 
+<img width="1874" height="774" alt="QQ_1779031342145" src="https://github.com/user-attachments/assets/9238e5cd-219c-48d3-949d-4f79ad6bc18d" />
 
+<p>We are going to add some backward recurrent layer to this simple RNN.</p>
 
+<img width="2020" height="750" alt="QQ_1779031533354" src="https://github.com/user-attachments/assets/775a980d-8d9c-4afc-a230-a17844756fd9" />
 
+<p>This nn defines a acyclic graph. It will first compute a<1> to a<4>, whereas the backword sequence would start by computing abackword<4> to abackword<1>. And these blocks can be not just standard RNN blocks, but they can also be GRU blocks or LSTM blocks.</p>
 
+<p>To make the predictions, your nn will have `yhat<t> = g(W_y[aforward[t], abackword[t]] + b_y)`</p>
 
+</br>
+
+# Deep RNNs
+
+</br>
+
+<p>If a block contains multiple hidden layers, then the entire RNN has only one recurrent memory. <b>However, each layer of a deep RNN has its own recurrent memory.</b></p>
+
+<img width="2860" height="1080" alt="QQ_1779087045826" src="https://github.com/user-attachments/assets/50e973fb-6064-4ed3-a09e-05c822bc0524" />
+
+`a[2]<3> = g(W_a[2] [a[2]<2>, a[1]<3>] + b_a[2])`
+
+<p>For the standard neural network like the one on the left, we have seen neural networks that are very deep, maybe over 100 layers. <b>But for RNNs, having three layers is already quite a lot.</b> Because of the temporal dimension, these networks can already get quite big. You rarely see these stacked up to be like 100 layers.</p>
+
+<p>But you can have many hidden layers that are stacked on the top of each RNN blcoks of the last layer to make the prediction. <b>And we don't connect them horizontally.</b></p>
 
 
 
