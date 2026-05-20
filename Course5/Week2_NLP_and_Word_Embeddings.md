@@ -24,29 +24,59 @@
 
 <p>Say you have three hundards of dimensions. Many values of orange and apple is similar. So the learning algorithm that has figured out that orange juice is a thing can also figure out that apple juice is a thing.</p>
 
-<p></p>
+<hr>
 
+<p>We can take this 300 dimensional data and <b>embed it in a two dimensional space</b> to visualize it.</p>
 
+<img width="946" height="720" alt="QQ_1779266641414" src="https://github.com/user-attachments/assets/cae74f69-4ab7-4dbb-b6f6-cdf8df4fc89f" />
 
+<p>The more they have in common, the closer they are.</p>
 
+<p>You can think of a 300 dimensional space, but I can't draw it, so I use 3D instead.</p>
 
+<p>Say orange gets embedded to a point, and apple gets embedded to here.</p>
 
+<img width="522" height="526" alt="QQ_1779266979897" src="https://github.com/user-attachments/assets/f7a436f6-fe22-49f3-bc3b-da82fd5f2a51" />
 
+</br>
 
+# Using Word Embeddings
 
+</br>
 
+<p>Continue our name entity rocognition example.</p>
 
+<img width="2108" height="576" alt="QQ_1779267660308" src="https://github.com/user-attachments/assets/58a70e0f-db56-40db-83c2-dd7735461353" />
 
+<p> After having trained a model that uses word embeddings as inputs, say you have another sentence "Robert Lin is an apple farmer.". Knowing that orange and apple are similar will make it easier to generalize to figure out that Pobert Lin is also a human.</p>
 
+<p>What if you see much less common words in your training set, such as durian cultivator, you might not seen these word in your training set. But if you have learned a word embedding. Algorithm knows that orange is a kind of fruit and cultivator is a kind of farmer, you might generalize from orange farmer in training set to know that durian cultivator is also probably a person.</p>
 
+<p>By examining tons of unlabeled text, you can figure out that orange and apple are similar, then groups them together. </p>
 
+<p>Transfer learning and word embeddings: </p>
 
+1. Learn word embeddings from very large (1 - 100 Billion words) text corpus, or you can download pre-trained embedding
 
+2. Transfer embedding to new task with smaller labeled training set. (say, 100k words)
 
+3. Optional: Continue to finetune the word embeddings with new date (Only if task 2 has a pretty big data)
 
+<p>If you want to transfer from task A to task B, the process of transfer learning is just most useful when you have a ton of data for A and relatively smaller data for B.</p>
 
+<p>We have a fixed vocabulary of, say, 10,000 words, and we will learn 10,000 fixed encodings (embedding) for each of the words.  </p>
 
+<p>Using embedding vectors <b>allows your algorithm to generalize much better, or you can learn from less label data.</b></p>
 
+<hr>
+
+<p>Word embedding have a interesting relationship to the face encoding.</p>
+
+<img width="2222" height="770" alt="QQ_1779282225184" src="https://github.com/user-attachments/assets/a955a032-9328-45cb-9e42-a2f6015a417f" />
+
+<p>We have 128 dimensional representations for different faces, and compare these encodings.</p>
+
+<p>The terms of encoding and embedding are used somewhat interchangeably. </p>
 
 
 
