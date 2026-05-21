@@ -78,39 +78,94 @@
 
 <p>The terms of encoding and embedding are used somewhat interchangeably. </p>
 
+</br>
 
+# Properties of word embeddings
 
+</br>
 
+<p>Man is to woman and king is to queen. Is it possible to have a algorithm to figure this out automatically?</p>
 
+<img width="2134" height="620" alt="QQ_1779348322157" src="https://github.com/user-attachments/assets/b6fe3778-c3bf-4480-b50a-100b8e0fbb6d" />
 
+<p>We have e_man and e_woman. And one interesting property of these vectors is that if you take the vector, e_man substract e_woman, then you end up with approximately e_king substract e_queen.</p>
 
+<p>Let's turn this into algorithm.</p>
 
+<p>The word embeddings live in maybe a 300 dimensional space. The vector difference between man and woman is very similar to the vector difference between king and queen.</p>
 
+<img width="882" height="746" alt="QQ_1779350269309" src="https://github.com/user-attachments/assets/b76e1cb9-95b2-4fa3-8ccd-71be1d46c05f" />
 
+<p>So in order to carry out this kind of analogical reasoning to figure out man is to woman is king is to what.</p>
 
+`e_man - e_woman \approx e_king - e_what`
 
+<p>To find this word w, use similarity function and max `Sim(e_w, e_king - e_man + e_woman)`</p>
 
+<p>If you learn a set of word embeddings and find the word w that maximizes the similarity, you can actually get the right answer.</p>
 
+<p>The most commonly used similarity function is called <b>cosin similarity</b>.</p>
 
+`sim(u, v) = u^T v / (|| u || * || v ||)`
 
+<p>If u and v are similar, the inner product will be large.</p>
 
+</br>
 
+# Embedding Matrix
 
+</br>
 
+<p>When you are implement the word embedding learning algorithm, you actually end up with a embedding matrix.</p>
 
+<img width="1796" height="726" alt="QQ_1779352661207" src="https://github.com/user-attachments/assets/860fd99e-eb06-41e4-907d-ddcdd8bd5552" />
 
+<p>We call this matrix as E. Say the word orange is at position 6087 and O_6087 is it's one-hot vector. The result of "E * O_6087" is e_6087 which is 300 by 1. But in practice, we use a special function to look up a embedding vector.</p>
 
+</br>
 
+# Learning Word Embeddings
 
+</br>
 
+<img width="1948" height="206" alt="QQ_1779354743101" src="https://github.com/user-attachments/assets/154b2193-a87d-444a-bfd5-8897b9502439" />
 
+<p>Let's build a nn to predict the next word.</p>
 
+<img width="1536" height="756" alt="QQ_1779354916313" src="https://github.com/user-attachments/assets/a8abd10e-cf31-462b-b75a-abd610b1d2f7" />
 
+<p>You get a bunch of embedding vectors by E * O. We <b>fill all of them into a nn hidden layer, then this hidden layer feeds to a softmax. The softmax layer classifies among the 10,000 possible outputs to predict the final word.</b> If your training set has word juice, it would predict juice.</p>
 
+<img width="1176" height="910" alt="QQ_1779355302888" src="https://github.com/user-attachments/assets/b0d49461-6e6b-4985-8ce1-59b91258fb66" />
 
+<p>We stack these six vector together, so the input would be a 1,800 (300*6) dimensional vector.</p>
 
+<p>What's more commonly done is to <b>have a fixed historical window</b>. You might always want to predict the next word given say the previous four words, and get rid of 'I' and 'want'. So you input a 1,200 dimensional vector.</p>
 
+<p><b>Using a fixed history, means that you can deal with arbitrarily long sentences.</b> This algorithm will learn pretty good word embeddings.</p>
 
+<p>Our orange and apple juice problem is in the algorithm's incentive to learn similar word embeddings for orange and apple.</p>
+
+<hr>
+
+<p>Now we use a more complex sentence to illustrate this algorithm.</p>
+
+<p>If your goal isn't to learn the previous language model, you can choose other context, for example, you can pose a learning problem where the context is four words on the left and right. Then feed into a nn.</p>
+
+```
+I want a glass of orange juice to go along with my cereal.
+target: juice
+context: Last 4 words
+         4 words on left & rightL: a glass of orange ____ to go along with
+         Last 1 word
+         Nearby 1 word: Skip-Gram 
+```
+
+</br>
+
+# Word2Vec
+
+</br>
 
 
 
