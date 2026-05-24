@@ -1,4 +1,4 @@
-</br>
+ </br>
 
 # Word Representation
 
@@ -167,31 +167,52 @@ context: Last 4 words
 
 </br>
 
+<p>Word2Vec is a more simple and computationally more efficient algorithm to learn embeddings.</p>
 
+`I want a glass of orange juice to go along with my cereal.`
 
+<p>In skip-gram model, what we're going to do is come up with a few context to target pairs to create supervised learning problem.</p>
 
+<p>So rather than having the context be always the last four words or immediately before the target word, what I'm going to do is <b>randomly pick a word to be the context word</b>. Say we choose the word orange. What we can going to do is to pick another word within some window, say plus and minus five words of the context word. So might just by chance you pick juice to be a target word. Another pair could be orange and glass.</p>
 
+```
+Context         Target
+orange          juice
+orange          glass
+orange          my
+```
 
+<p>So we set up a supervised learning problem where given the context word orange. You're asked to predict what is a randomly chosen word within, say a plus minus ten word window of that input context word. Obviously that's not a very easy learning problem.</p>
 
+<p>But the goal of setting up this supervised learning problem is not to do well on this prolem itself, <b>we want to use this learning problem to learn good word embeddings.</b></p>
 
+<hr>
 
+<p>Say your vocabulary size is 10,000k. The basic supervised learning problem is that <b>we want to learn a mapping from context c to some target t</b></p>
 
+`e_c = E * O_c`
 
+<p>In the nn we formed, we take vector e_c and feed it to a softmax unit. The job of the softmax is to estimate probablities of different target words given the context word. Softmax outputs P(t | c)</p>
 
+`P(t | c) = e^{theta^T_t * e_c} / (\sum^10,000k_{j = 1} e^{theta^T_j * e_c})`
 
+`L(yhat, y) = - \sum y_i log yhat_i`
 
+<p>Theta_t is associated with target word. Y is a one-hot vector. <b>Softmax layer has theta_t parameters</b></p>
 
+`O_c -> E -> e_c -> [softmax] -> yhat`
 
+<p><b>If you optimize this loss function, you actually get a pretty good embedding matrix or a set of embedding vectors.</b> And we learn theta_t.</p>
 
+<p>This is called the skip-gram model.</p>
 
+<p><b>During training, we used (orange, juice) and (orange, glass) pair, so it will continuously push e_orange to become a vector that easily matches with "juice", "glass" and other words in the "fruit" category. Consequently, the embeddings of orange, apple and banana will be very close.</b></p>
 
+<hr>
 
+<p>There are a couple problems.</p>
 
-
-
-
-
-
+<p>The primary problem is computational speed.</p>
 
 
 
