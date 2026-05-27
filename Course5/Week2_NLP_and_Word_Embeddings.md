@@ -212,77 +212,113 @@ orange          my
 
 <p>There are a couple problems.</p>
 
-<p>The primary problem is computational speed.</p>
+<p>The primary problem is computational speed. Every time you want to evaluate P(t | c), ni need to carry out a sum. One solution is to use a <b>hierarchical softmax</b> classfier, and what that means is that instead of trying to categorize something into 10,000k categories on one go, imagine you have one classifier that tells you is the target word in the first 5,000k words or is in the second 5,000k words in vocabulary. The second classifier tells you that this in the first 2,500k words, <b>and so on</b>.</p>
 
+<p>You have a tree of classifier, so you don't need to sum over all 10,000k words.</p>
 
+<p><b>In practice, the hierarchical softmax classifier can be developed so that the common words tend to be on top, whereas the less common words can be buried much deeper in the tree</b></p>
 
+<img width="478" height="536" alt="QQ_1779612949853" src="https://github.com/user-attachments/assets/8cc0eec7-330e-44b2-be18-a807bc9be507" />
 
+<hr>
 
+<p>How to sample the context c?</p>
 
+<p>One thing you could do is sampling uniformly at random from your training corpus. When you do that, there are some words like the, of, a, and, to and so on that appear extremely frequently. Whereas the other words like orange, apple and durian don't qppear that often. If you don't want you training set to be dominated by these extremely frequently occurring words. <b>Because then you spend almost all the effort updating e_c ofr those frequently occurring words. But you want to spend time updating the embedding for these less common words.</b></p>
 
+<p>So we don't pick context word randomly, but instead there are different heuristics that you could use in order to balance out sampling from the common words to less common words.</p>
 
+</br>
 
+# Negative Sampling
 
+</br>
 
+<p>Say we define a new supervised learning problem. The problem is given a pair of words like orange and juice. We're going to predict is this a context-target pair? In this example, orange and juice was a positive example. Orange and king was a negative example, then we write 0 for this pair. We associate orange and juice with a label of 1 as the first row.</p>
 
+<p>The positive example is generated exactly the same as how we generated in the skip-gram (sample a context word, look around a window of plus-minus 10 words to pick up a target word)</p>
 
+<p>To generate a negative example, you use the same context word and pick up a word at random from the dictionary, and we label that as zero. <b>Under the assumption that if we pick a random word, it probably won't be associated with the context word.</b> </p>
 
+<p>What we'll do is that, for some number times like k times, we're going to take the same context word and pick random words and label all those zero.</p>
 
+<p>K is 5 to 20, and if you have a large data set then choose k to be smaller (2 to 5). We use k equals 4 here. </p>
 
+<p>Then create a supervised learning problem where the algorithm inputs this pair of words as x and <b>it has to predict the target label</b>, and learning a mapping from x to y.</p>
 
+<img width="866" height="980" alt="QQ_1779677515552" src="https://github.com/user-attachments/assets/40736285-b133-4a8b-aa4d-63793bd35bfc" />
 
+<p>We define a logistic regression model, and you have a parameter vector theta for each possible target word.</p>
 
+`P(y = 1 | c, t) = sigmoid(theta_t^T *e_c)`
+ 
+<p>For every positive example you have k negative examples to train this logistic regression-like model.</p>
 
+<img width="1304" height="472" alt="QQ_1779686685356" src="https://github.com/user-attachments/assets/22508e0e-ec1f-425b-bfba-87a6cad217a4" />
 
+<p>So instead of having one giant 10,000k way softmax, we've instead turned it into 10,000k binary classification problems. On every iteration, we're only going to train five of them.</p>
 
+</br>
 
+## Select Negative Examples
 
+</br>
 
+<p>You could sample it according to the empirical frequency of words in your corpus, but you might end up with a very high representation of words like the, of, and, and so on.</p>
 
+<p>One other extreme situation would be to say you use 1 over vocabulary_size to sample the negative examples uniformly at random. But <b>that's very non-representative of the distribution of English words</b>.</p>
 
+<p>Therefore, we adopted a compromise approach.</p>
 
+`P(w_i) = f(w_i)^{3/4} / \sum^10,000k f(w_j)^{3/4}`
 
+<p>I'm not sure this is very theoretically justified.</p>
 
+</br>
 
+# GloVe Word Vectors
 
+</br>
 
+<p>GloVe stands for global vectors for word representation. Previously, we were sampling pairs context and target by picking two words that appear in close proximity to each other. What GloVe does is it starts off just by making that explicit.</p>
 
+```
+X_ij = # times i appears in the context of j
+```
 
+<p>I for t and j for c. Depending on the definition of c and t, x_ij equals x_ji.</p>
 
+<p>X_ij is a count that captures how often do words i and j appear with each other, or close to each other. So GloVe model optimizes as following. We're going to minimize the difference between `(theta_i^T e_j - log X_ij)^2`</p>
 
+<p>The term measures how far is the predicted relationship theta_i_T e_j from the target value log X_ij. We use gradient descent to minimize `\sum_{i = 1}^{10,000k} \sum_{j = 1}^{10,000k} (theta_i^T e_j - log X_ij)^2`</p>
 
+<p>Log of zero is undefined, is negative infinity. So we add an extra weighting term f(x_ij). f(x_ij) = 0 if x_ij = 0.</p>
 
+<p>Another role of f(X_ij) is that there are some words appear very often like the, a, of, is and so on, we don't give these words too much weight. And there are also some infrequent words like durion, <b>which you actually want to take into account, but not as frequently as the more common words.</b> So f(X_ij) can be a function that gives a meaningful amount of computation to less frequent words.</p>
 
+<p>The roles of theta and e are completely symmetric (theta_i and e_j are symmetric), because <b>X_ij equals X_ji</b>. they play pretty much the same role and you could reverse them. So you can initialize theta and e both uniformly and use gradient descent to minimize them. When you're done for every word then take the average.</p>
 
+`e_w^{final} = (e_w + theta_w) / 2`
 
+<p>E_w and theta_w play symmetric roles unlike the previous model where theta and e play different roles.</p>
 
+<hr>
 
+<img width="1268" height="586" alt="QQ_1779722671413" src="https://github.com/user-attachments/assets/0f7d5da7-62d7-4af3-8029-384c0fc577f4" />
 
+<p>You can not guarantee that the individual components of the embeddings are interpretable.</p>
 
+`(A theta_i)^T (A e_j) = theta_i^T A^T A e_j = theta_i e_j`
 
+<p>So if you plot a dimensional coordinate system, an axis could be a combination of gender, royal and age.</p>
 
+</br>
 
+# Sentiment Classification
 
+</br>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<p>One of the chanllenges of sentiment classification is that you might don't have a huge labeld training set. But with word embeddings, you're able to build good sentiment classifier.</p>
 
 
 
