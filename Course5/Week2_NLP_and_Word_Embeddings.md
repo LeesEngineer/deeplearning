@@ -364,6 +364,10 @@ e_male - e_female
 ...
 ```
 
+<p>We call this average as b. And use following formula to update word embeddings.</p>
+
+`w' = w - \frac{w^T b}{\|b\|^2}b`
+
 <img width="1108" height="970" alt="QQ_1779864157242" src="https://github.com/user-attachments/assets/f38630bd-9f0f-4424-a8d7-3067320609dc" />
 
 <p>What looks like is that this direction is gender direction. It might be 299-dimensional subspace. And this direction can be higher than 1-dimensional.</p>
