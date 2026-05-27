@@ -320,47 +320,73 @@ X_ij = # times i appears in the context of j
 
 <p>One of the chanllenges of sentiment classification is that you might don't have a huge labeld training set. But with word embeddings, you're able to build good sentiment classifier.</p>
 
+<img width="2472" height="724" alt="QQ_1779840890725" src="https://github.com/user-attachments/assets/4fcbfde0-71e1-4b05-91ec-31a5bc217a78" />
 
+<p>The first thing you can do is take their average and feed it to the softmax to predict five outputs.</p>
 
+<p>This average work decently well. But it ignores word order. In particular, this is a negative comment: "Completely lacking in good taste, good service and good ambience.". The word good appears a lot. Your classifier might think it's a good review.</p>
 
+<p>So you could use a <b>RNN</b></p>
 
+<img width="2598" height="990" alt="QQ_1779842646849" src="https://github.com/user-attachments/assets/2de3ab00-20b7-44b4-8dcd-4b7a5f386958" />
 
+<p>With an algorithm like this, it will be much better at taking word sequence into account.</p>
 
+<p>And because your word embeddings are trained from a much larger data set, it works better.</p>
 
+<p>"lacking in" to "ansent of"</p>
 
+</br>
 
+# Debiasing word embeddings
 
+</br>
 
+<p>We like to make sure that as much as possible that they're free of undesirable forms of bias</p>
 
+<p>We have data-level debiasing, embedding debiasing, loss-function debiasing and so on. Such a danger is facing us mainly with word embeddings.</p>
 
+<p>A learned embedding tends to output man is to computer programmer as woman is to homemaker and father is to doctor as mather is to nurse. It enforces a very unhealthy gender stereotype.</p>
 
+<hr>
 
+<p>Addressing bias in word embeddings</p>
 
+<img width="888" height="968" alt="QQ_1779856418502" src="https://github.com/user-attachments/assets/f73402d9-784e-41d1-a533-5d19e793885d" />
 
+<p>Some words are embedded as shown in the figure.</p>
 
+<p>The first thing we're going to do is <b>identifying the direction corresponding to a particular bias we want to reduce or eliminate</b>. So how to identoify the direction corresponding to the bias. What can we do is taking the e_he and subtract the e_she. And take a few of these and average them</p>
 
+```
+e_he - e_she
+e_male - e_female
+...
+```
 
+<img width="1108" height="970" alt="QQ_1779864157242" src="https://github.com/user-attachments/assets/f38630bd-9f0f-4424-a8d7-3067320609dc" />
 
+<p>What looks like is that this direction is gender direction. It might be 299-dimensional subspace. And this direction can be higher than 1-dimensional.</p>
 
+<p>We're going to use a algorithm called a SVU (singular value decomposition).</p>
 
+<p>The next step is a <b>neutralization step</b>. For every word that is undefinitional, project it to get rid of bias.</p>
 
+<p>For words like doctor and babysitter, we project them onto this non-bias direction axis to reduce their component in the bias direction.</p>
 
+<img width="1230" height="1098" alt="QQ_1779866556031" src="https://github.com/user-attachments/assets/a08c0f7d-adef-42c3-abbc-31c1c1c3dd18" />
 
+<p>The final step is called equalization. In this step, we equalize pairs. You may have pairs of words like grandfather and grandmother, <b>where you want the only difference in their embedding to be the gender.</b></p>
 
+<p>In the example, the distence or between babysitter and grandmother is actually smaller than the distence between babysitter and grandfather.</p>
 
+<img width="1240" height="1126" alt="QQ_1779867075810" src="https://github.com/user-attachments/assets/19236e55-dd90-44b5-9ef5-0327821cce86" />
 
+<p>What we'd like to do is to make sure that words like grandfather and grandmother are both the exactly same similarity from the word that should be gender neutral.</p>
 
+<p>So we move grandmother and grandfather to a pair points that are equidistant form the axis.</p>
 
-
-
-
-
-
-
-
-
-
-
+<p>The number of words that you should equalize is relatively small.</p>
 
 
 
