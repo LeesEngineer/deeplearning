@@ -69,10 +69,11 @@ Jane is going to be visiting Africa in September
 
 </br>
 
-<p></p>
+<p>The first thing Beam search has to do is trying to pick the first word of the translation.</p>
 
+<img width="1030" height="476" alt="QQ_1780133788899" src="https://github.com/user-attachments/assets/d906781d-ad7e-4732-a4b9-6c05008e0818" />
 
-
+<p>We use it to evaluate P(y<1> | x). Greedy search try to pick the most likely words and move on. Beam search can instead consider multiple alternatives. So it has a parameter called B (Beam Width). Maybe </p>
 
 
 
