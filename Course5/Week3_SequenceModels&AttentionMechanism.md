@@ -73,54 +73,75 @@ Jane is going to be visiting Africa in September
 
 <img width="1030" height="476" alt="QQ_1780133788899" src="https://github.com/user-attachments/assets/d906781d-ad7e-4732-a4b9-6c05008e0818" />
 
-<p>We use it to evaluate P(y<1> | x). Greedy search try to pick the most likely words and move on. Beam search can instead consider multiple alternatives. So it has a parameter called B (Beam Width). Maybe </p>
+<p>We use it to evaluate P(y<1> | x). Greedy search try to pick the most likely words and move on. Beam search can instead consider multiple alternatives. So it has a parameter called B (Beam Width). Maybe it finds that the choices in jane september are the most likely threepossibilities for the first word</p>
 
+<p>Then what beam search will do is for each of these three choices condsider what should be the second word. It evaluates P(y<1> | x, y<2>).</p>
 
+<img width="1476" height="364" alt="QQ_1780210225974" src="https://github.com/user-attachments/assets/5e318e29-900a-49e6-a21c-cfd5976ba8e2" />
 
+<p>What we ultimately care about in second step is to find the pair of (yhat<1>, yhat<2>) that is most likely.</p>
 
+`P(y<1>, y<2> | x) = P(y<1> | x) * P(y<2> | x, y<1>)`
 
+<p>You have seen how you can evaluate the probability of the second word.</p>
 
+<p>Because B equals three, you get 30,000k probabilities, and <b>pick the top three.</b></p>
 
+<p>The third step.</p>
 
+<img width="1372" height="334" alt="QQ_1780210857860" src="https://github.com/user-attachments/assets/1d311744-c32e-4ad8-877d-2e6e29de7945" />
 
+<p>It allows you to evaluate P(y<3> | x, y<1>, y<2>).</p>
 
+`P(y<1>, y<2>, y<3> | x) = P(y<1> | x) * P(y<2> | x, y<1>) * P(y<3> | x, y<1>, y<2>)`
 
+</br>
 
+# Refinements to beam search
 
+</br>
 
+## Length normalization
 
+</br>
 
+<p>beam search is trying to maximizing this probability. </p>
 
+`\prod_{t = 1}^{T_y} P(y<t> | x, y<1>, ..., y<t-1>) = P(y<1> ... y<T_y> | x)`
 
+<p>If you're implementing this, these probabilities are all numbers less than 1, often they're much less than 1. Multiplying a lot of numbers less than 1 will result a very tiny number <b>which can result in numerical underflow.</b></p>
 
+<p>So instead of maximizing this product, we will take logs.</p>
 
+`\sum_{y = 1}^{T_y} log P(y<t> | x, y<1>, ..., y<t-1>)`
 
+<p>We get a more numerically stable algorithm that is less prone to rounding errors.</p>
 
+<hr>
 
+<p>There is other change to this objective function. Because you're multiplying a lot of terms that are less than 1 to estimate the probability. So this objective function has a undesirable effect that <b>maybe it unnaturally tends to prefer very translations.</b> The same thing is true for log.</p>
 
+<p>We could normalize this by dividing it by T_y.</p>
 
+<p>And we have a softer approach, we have T_y to the power of alpha, maybe alpha is equal to 0.7 that is somewhat in between full normalization and no mormalization.</p>
 
+<p>Using alpha is a heuristic.</p>
 
+</br>
 
+## Beam width
 
+</br>
 
+<p>The larger B is, the more possibility you're considering. Ten is common in applications.</p>
 
+<p>It's not uncommon to see people use beam widths of 1,000 or 3,000, but it's domain dependent.</p>
 
+</br>
 
+# Error analysis on beam search
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+</br>
 
 
 
