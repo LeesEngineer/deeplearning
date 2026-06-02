@@ -1,4 +1,4 @@
-</br>
+<img width="1964" height="534" alt="QQ_1780317979330" src="https://github.com/user-attachments/assets/3478a360-6e51-45f6-9963-692b6e0b024d" /></br>
 
 # Basic Models
 
@@ -143,59 +143,81 @@ Jane is going to be visiting Africa in September
 
 </br>
 
+<p>Beam search is an approximate search algorithm.</p>
 
+<p>We have two ways to improve the performance of RNN: Getting more training data and increasing Beam width.</p>
 
+<p>We are always tempting to collect more training data that never hurts, So in similar way, it's tempting to increase the beam width that never hurts. But just as getting more training data by itself might not get you to the level of performance you want, so increasing the beam width might not get you to where you want to go.</p>
 
+<img width="1858" height="290" alt="QQ_1780295599364" src="https://github.com/user-attachments/assets/af92ada3-d8f8-456a-8be4-3cb295dfb0c3" />
 
+<p>We have two translation. We are going to compute P(y* | x) and P(yhat | x) and see which of these two is bigger.</p>
 
+<p>Case1: Beam search chose yhat. But y* attains higher P(y | x). So<b>beam search is fault.</b></p>
 
+<p>Case2: y* is a better translation that yhat. But RNN predicted P(y* | x) is less than P(yhat | x). <b>RNN model is at fault.</b></p>
 
+<p>Then you can ascribe the error to either search algorithm or to the RNN model. If beam search is responsible for a lot of errors, then increass the beam width. Whereas in contrast, if you find that the RNN model is at fault, then you could add regularization, or get more training data.</p>
 
+</br>
 
+# Bleu score
 
+</br>
 
+<p>As long as the machine generated translation is pretty close to any of the references provided by humans, then it will get a high BLEU (Bilingual Evaluation Understudy) score.</p>
 
+<p>The intuition behind the BLEU score is we're going to look at the machine generated output and see if the types of words it generates appear in at least one of the human generated references.</p>
 
+<img width="1630" height="812" alt="QQ_1780298878871" src="https://github.com/user-attachments/assets/ae4cbc2c-3fa7-4493-a954-6441bfde523b" />
 
+<p>One way to measure how good the MT is to look at each words in the output and <b>see if it appears in the reference.</b> This would be called a precision of the MT output.</p>
 
+<p>Each word in MT output appears in reference. So the precision is `7/7`. It seems that this way is useless.</p>
 
+<p><b>Modified precision</b>: we will give each word credit only up to the maximum number of times that it appears in the reference. So it's '2/7'</p>
 
+<p>But so far, we've been looking at words in isolation. In BLEU score, you look at pairs of words.</p>
 
+</br>
 
+## BLEU Score on Bigrams
 
+</br>
 
+<img width="1598" height="464" alt="QQ_1780303148565" src="https://github.com/user-attachments/assets/cb5cb9dc-183b-40de-b2f1-877c45304412" />
 
+<p>We have these bigrams "The cat", "cat the", "cat on", "on the" and "the mat". </p>
 
+<img width="1264" height="768" alt="QQ_1780303236344" src="https://github.com/user-attachments/assets/66c6c64e-c8fa-45c9-9130-c441986d5bca" />
 
+<p>The precision is `(1+0+1+1+1)/(2+1+1+1+1) = 2/3` (sum of countclip divided by sum of count)</p>
 
+<p>P_n stands for n-grams.</p>
 
+<p>Allows you to measure the degree to which the machine translation output is similar or overlaps with the references.</p>
 
+<p>Then combine BLEU score: `exp(1/n * \sum_{n = 1}^{n} P_n)`</p>
 
+<p>Then adjust this with one more factor called BP (Brevity penalty). It turns out that if you output very short translations, it's easier to get higher precision.</p>
 
+<img width="2654" height="308" alt="QQ_1780304335685" src="https://github.com/user-attachments/assets/07123b65-333a-4bad-ab58-feab980b28d8" />
 
+</br>
 
+# Attention Model Intuition
 
+</br>
 
+<img width="1430" height="528" alt="QQ_1780305546475" src="https://github.com/user-attachments/assets/74e57443-d420-4cea-9880-531e2c0baf6a" />
 
+<p>With attention model, the performance will be like green. Because by working one part of the sentence at a time, you don't see this huge dip which is really measuring the ability of a nn to memorize a long sentence, which maybe is what we most badly need a nn to do.</p>
 
+<p>Let's illustrate it with a short sentence. Say you use a BRNN.</p>
 
+<img width="1964" height="534" alt="QQ_1780317979330" src="https://github.com/user-attachments/assets/dfdb0f1d-fbd6-4bf9-9917-3ac0368c0613" />
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<p>Get rid of yhat on the top.</p>
 
 
 
