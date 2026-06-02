@@ -217,19 +217,19 @@ Jane is going to be visiting Africa in September
 
 <img width="1964" height="534" alt="QQ_1780317979330" src="https://github.com/user-attachments/assets/dfdb0f1d-fbd6-4bf9-9917-3ac0368c0613" />
 
-<p>Get rid of yhat on the top.</p>
+<p>Get rid of yhat on the top. We're going to use another RNN to generate the English translations, and use s<t> to represent activation.</p>
 
+<p>The question is when you're trying to generate the first word, what part of the French sentence shou be looking at. Seems like you should look at the frst word or words closed by it. </p>
 
+<p>So what attention model would be computing is a set of <b>attention weights</b>. We're going to use alpha<1, 1> to denote when you're generating the first word, how much should you be paying attention to the first piece of information.</p>
 
+<p>Then we come up with second attention weight called alpha<1, 2> that try to tell us how much attention we're paying to this second word when computing the first output. And so on.</p>
 
+<p>Then for the second output, we have a new set of attention weights. </p>
 
+<img width="1966" height="1052" alt="QQ_1780388712833" src="https://github.com/user-attachments/assets/ed6b92bf-3f3f-4059-a565-0f8227e98dbd" />
 
-
-
-
-
-
-
+<p></p>
 
 
 
