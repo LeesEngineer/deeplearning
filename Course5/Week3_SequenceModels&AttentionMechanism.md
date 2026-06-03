@@ -229,22 +229,47 @@ Jane is going to be visiting Africa in September
 
 <img width="1966" height="1052" alt="QQ_1780388712833" src="https://github.com/user-attachments/assets/ed6b92bf-3f3f-4059-a565-0f8227e98dbd" />
 
+</br>
+
+# Attention Model
+
+</br>
+
+<p>You have seen how the attention model allows a nn to pay attention to only part of an input sentence while generating a translation.</p>
+
+<img width="2120" height="436" alt="QQ_1780448518484" src="https://github.com/user-attachments/assets/cefa1746-5674-4e52-afd1-624ba21ead19" />
+
+`a<t'> = (aforward<t'>, abackward<t'>)`
+
+<img width="1220" height="638" alt="QQ_1780448725863" src="https://github.com/user-attachments/assets/422abcb0-f1e3-47d4-bb22-56ab58db23e9" />
+
+<p>Formally, the attention weights will be non-negative, and they all sum to one: `\sum_{t'} alpha<1, t'> = 1`</p>
+
+`c<1> = \sum_{t'} alpha<1, t'> a<t'>`
+
+<img width="662" height="380" alt="QQ_1780449102797" src="https://github.com/user-attachments/assets/b9cec1d6-4163-4af9-881b-362550c0734e" />
+
+<p>alpha<t, t'> is amount of "attention" that y<t> should pay to a<t'>.</p>
+
+<img width="732" height="190" alt="QQ_1780449714280" src="https://github.com/user-attachments/assets/aa293f61-4448-44a9-9a91-ea08b6ca38e6" />
+
+<p>We use softmax to ensure that this sums to one.</p>
+
+<p>One way to compute e<t, t'> is using a small nn. But we don't know what the function is, so <b>trust back propagation</b>.</p>
+
+<img width="828" height="320" alt="QQ_1780450031928" src="https://github.com/user-attachments/assets/99540de2-4d25-4689-a26d-48ea6b10b4f0" />
+
+<img width="776" height="688" alt="QQ_1780450610719" src="https://github.com/user-attachments/assets/1ed0de30-aa16-41db-aea4-f6d75feb6730" />
+
+<p>The corresponding input and output words, you find that the attention weights will tend to be high</p>
+
+</br>
+
+# Speech Recognition
+
+</br>
+
 <p></p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
