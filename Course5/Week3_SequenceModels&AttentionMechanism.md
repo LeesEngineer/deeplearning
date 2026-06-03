@@ -1,5 +1,3 @@
-<img width="1964" height="534" alt="QQ_1780317979330" src="https://github.com/user-attachments/assets/3478a360-6e51-45f6-9963-692b6e0b024d" /></br>
-
 # Basic Models
 
 </br>
