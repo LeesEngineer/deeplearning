@@ -267,28 +267,37 @@ Jane is going to be visiting Africa in September
 
 </br>
 
-<p></p>
+<img width="494" height="342" alt="QQ_1780619441930" src="https://github.com/user-attachments/assets/38b0fa15-74ce-4f2b-b8c1-d1a7c526116c" />
 
+<p>Once upon a time, speech recognition system was built using phonemes which have hand-engineered basic unit of sound. For example, "The quick brown fox" represented as phonemes will, 'The' has a 'th' and 'e' sound, and 'quick' has a 'k', 'w', 'i' and 'k' sound.</p>
 
+<p>But with end-to-end deep learning, we find that this is unnessary. We can input a audio clip and directly output the transcript. We need 300 hour to 3000 hour data set of transcripted audio.</p>
 
+<img width="2306" height="1084" alt="QQ_1780621311275" src="https://github.com/user-attachments/assets/2cba8f77-94d4-4118-ab8c-74466a63350d" />
 
+<p>You can use a attention model.</p>
 
+<p>You can also use the CTC (connectionist temporal classification) cost for speech recognition.</p>
 
+<img width="1602" height="462" alt="QQ_1780622507950" src="https://github.com/user-attachments/assets/6f9b7c1d-4910-46df-bf8e-a4ff7ff54a2a" />
 
+<p>You could use BRNN, GRU or LSTM, but notice that the number of time step is very large here and usually the number of time step is much bigger than the number of output.</p>
 
+<p>CTC allows the RNN to generate outputs like this:</p>
 
+<img width="1302" height="130" alt="QQ_1780622835299" src="https://github.com/user-attachments/assets/ca8181e0-3bb0-4302-9177-9d5c5fff2db7" />
 
+<p>'_' is a blank character. The another is a space.</p>
 
+</br>
 
+# Trigger Word Detection
 
+</br>
 
+<img width="2582" height="1006" alt="QQ_1780628821739" src="https://github.com/user-attachments/assets/36e96085-673e-45d9-bb3b-7e11a9628391" />
 
-
-
-
-
-
-
+<p>If the trigger word appears, set y to 0 before the trigger word and to 1 from the trigger word onward until the end of the sequence.</p>
 
 
 
