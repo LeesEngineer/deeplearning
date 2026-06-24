@@ -14,8 +14,6 @@
 
 <p>To localize the car in the image, you can change you network to have a few more output units that output a bounding box. In particular, you can have the neural network output four more numbers, and I call them bx, by, by and bw. These four numbers parameterize the bounding box of the detected object.</p>
 
-<img width="2360" height="1574" alt="QQ_1777297661355" src="https://github.com/user-attachments/assets/cf8ed318-3c54-4b9d-9abb-135d502e8f80" />
-
 <p>To specifying the bounding box, requires specifying the midpoint (bx, by), the height will be bh, and the width bw.</p>
 
 <p>So training set contains not just the object class label, but it also contains four numbers. Then <b>you can use supervised learning to make your algorithm outputs not just a class label, but also the four parameters.</b></p>
